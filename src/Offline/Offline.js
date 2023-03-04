@@ -24,6 +24,7 @@ export default function Offline({ children }) {
   }, [online]);
 
   useEffect(() => {
+    console.log("dashbaord");
     window.addEventListener("online", setOnline);
     window.addEventListener("offline", setOffline);
 
@@ -31,7 +32,7 @@ export default function Offline({ children }) {
       window.removeEventListener("online", setOnline);
       window.removeEventListener("offline", setOffline);
     };
-  }, []);
+  });
 
   return (
     <>
