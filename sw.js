@@ -3,13 +3,13 @@ this.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(cacheData).then((cache) => {
       cache.addAll([
-        "./",
+        "./pwa-erp-solutions/",
         // "static/js/bundle.js ",
-        "/manifest.json",
-        "/index.html",
-        "/",
-        "/about",
-        "/users",
+        "/pwa-erp-solutions/manifest.json",
+        // "/index.html",
+        "/pwa-erp-solutions/",
+        "/pwa-erp-solutions/about",
+        "/pwa-erp-solutions/users",
       ]);
     })
   );
