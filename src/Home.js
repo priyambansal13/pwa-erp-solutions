@@ -15,13 +15,9 @@ const Home = () => {
   };
 
   const backgroundSync = () => {
-    navigator.serviceWorker.ready
-      .then((swRegistration) => {
-        if (swRegistration.sync) {
-          swRegistration.sync.register("post-data");
-        }
-      })
-      .catch(console.log);
+    navigator.serviceWorker.ready.then(function (swRegistration) {
+      return swRegistration.sync.register("post-data");
+    });
   };
 
   const insertIntoDatabase = (dataObject) => {
