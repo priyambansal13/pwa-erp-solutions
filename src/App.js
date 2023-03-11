@@ -1,24 +1,21 @@
 import React from "react";
 import "./App.css";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
-import Offcanvas from "react-bootstrap/Offcanvas";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Link, Route, Routes, BrowserRouter as Router } from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import Home from "./Home";
 import About from "./About";
 import Users from "./Users";
+import NavigationBar from "./NavigationBar";
+import Login from "./Login";
+import Register from "./Register";
 
 function App() {
   return (
     <>
       <Router>
-        {[false].map((expand) => (
+        <NavigationBar />
+        {/* {[false].map((expand) => (
           <Navbar key={expand} bg="light" expand={expand} className="mb-3">
             <Container fluid>
               <Navbar.Brand href="#">React Progressive Web App</Navbar.Brand>
@@ -38,21 +35,21 @@ function App() {
                 <Offcanvas.Body>
                   <Nav className="justify-content-end flex-grow-1 pe-3">
                     <Nav.Link>
-                      <Link to="/">Home</Link>
+                      <Link to="/pwa-erp-solutions/home">Home</Link>
                     </Nav.Link>
                     <Nav.Link>
-                      <Link to="/about">About</Link>
-                      {/* <Link to="/about">About</Link> */}
+                      <Link to="/pwa-erp-solutions/about">About</Link>
+                      {/* <Link to="/about">About</Link> 
                     </Nav.Link>
                     <NavDropdown
                       title="Dropdown"
                       id={`offcanvasNavbarDropdown-expand-${expand}`}
                     >
                       <NavDropdown.Item>
-                        <Link to="/users">Users</Link>
+                        <Link to="/pwa-erp-solutions/users">Users</Link>
                       </NavDropdown.Item>
                       <NavDropdown.Divider />
-                      <NavDropdown.Item href="/about">
+                      <NavDropdown.Item href="/pwa-erp-solutions/about">
                         Something else here
                       </NavDropdown.Item>
                     </NavDropdown>
@@ -70,12 +67,17 @@ function App() {
               </Navbar.Offcanvas>
             </Container>
           </Navbar>
-        ))}
+        ))} */}
 
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/users" element={<Users />}></Route>
+          <Route path="/pwa-erp-solutions/" element={<About />}></Route>
+          <Route path="/pwa-erp-solutions/about" element={<Home />}></Route>
+          <Route path="/pwa-erp-solutions/users" element={<Users />}></Route>
+          <Route path="/pwa-erp-solutions/login" element={<Login />}></Route>
+          <Route
+            path="/pwa-erp-solutions/register"
+            element={<Register />}
+          ></Route>
         </Routes>
       </Router>
     </>

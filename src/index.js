@@ -4,15 +4,13 @@ import "./index.css";
 import App from "./App";
 // import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 // import reportWebVitals from "./reportWebVitals";
-import Offline from "./Offline/index";
+// import Offline from "./Offline/index";
 import swDev from "./swdev";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Offline>
-      <App />
-    </Offline>
+    <App />
   </React.StrictMode>
 );
 
