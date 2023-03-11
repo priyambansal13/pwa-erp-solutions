@@ -20,9 +20,7 @@ const About = () => {
                       We Help You Businesses Innovate and Grow
                     </h1>
                     <p>
-                      <a href="#" class="btn btn-white">
-                        Connect with us
-                      </a>
+                      <span class="btn btn-white">Connect with us</span>
                     </p>
                   </div>
                 </div>
@@ -42,9 +40,7 @@ const About = () => {
                     <h2>We Support Business</h2>
                     <h1 class="mb-4">The Best Business Support</h1>
                     <p>
-                      <a href="#" class="btn btn-white">
-                        Connect with us
-                      </a>
+                      <span class="btn btn-white">Connect with us</span>
                     </p>
                   </div>
                 </div>
@@ -64,9 +60,7 @@ const About = () => {
                     <h2>We Give Advice</h2>
                     <h1 class="mb-4">Expert Financial Advice</h1>
                     <p>
-                      <a href="#" class="btn btn-white">
-                        Connect with us
-                      </a>
+                      <span class="btn btn-white">Connect with us</span>
                     </p>
                   </div>
                 </div>
@@ -261,7 +255,7 @@ const About = () => {
         </div>
       </section>
 
-      <section class="ftco-section testimony-section bg-light">
+      {/* <section class="ftco-section testimony-section bg-light">
         <div class="overlay"></div>
         <div class="container">
           <div class="row justify-content-center pb-5 mb-3">
@@ -397,7 +391,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* <section class="ftco-section ftco-no-pt bg-light ftco-faqs">
         <div class="container">
@@ -725,7 +719,7 @@ const About = () => {
                     A small river named Duden flows by their place and supplies
                     it with the necessary regelialia.
                   </p>
-                  <ul class="ftco-footer-social p-0">
+                  {/* <ul class="ftco-footer-social p-0">
                     <li class="ftco-animate">
                       <a
                         href="#"
@@ -756,7 +750,7 @@ const About = () => {
                         <span class="fa fa-instagram"></span>
                       </a>
                     </li>
-                  </ul>
+                  </ul> */}
                 </div>
                 <div class="col-md-8">
                   <div class="row justify-content-center">
@@ -766,24 +760,22 @@ const About = () => {
                           <h2 class="footer-heading">Services</h2>
                           <ul class="list-unstyled">
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                Market Analysis
-                              </a>
+                              <span class="py-1 d-block">Market Analysis</span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
+                              <span class="py-1 d-block">
                                 Accounting Advisor
-                              </a>
+                              </span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
+                              <span class="py-1 d-block">
                                 General Consultancy
-                              </a>
+                              </span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
+                              <span class="py-1 d-block">
                                 Structured Assestment
-                              </a>
+                              </span>
                             </li>
                           </ul>
                         </div>
@@ -791,24 +783,18 @@ const About = () => {
                           <h2 class="footer-heading">Discover</h2>
                           <ul class="list-unstyled">
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                About us
-                              </a>
+                              <span class="py-1 d-block">About us</span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                Contract us
-                              </a>
+                              <span class="py-1 d-block">Contract us</span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
+                              <span class="py-1 d-block">
                                 Terms &amp; Conditions
-                              </a>
+                              </span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                Policies
-                              </a>
+                              <span class="py-1 d-block">Policies</span>
                             </li>
                           </ul>
                         </div>
@@ -816,24 +802,16 @@ const About = () => {
                           <h2 class="footer-heading">Resources</h2>
                           <ul class="list-unstyled">
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                Security
-                              </a>
+                              <span class="py-1 d-block">Security</span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                Global
-                              </a>
+                              <span class="py-1 d-block">Global</span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                Charts
-                              </a>
+                              <span class="py-1 d-block">Charts</span>
                             </li>
                             <li>
-                              <a href="#" class="py-1 d-block">
-                                Privacy
-                              </a>
+                              <span class="py-1 d-block">Privacy</span>
                             </li>
                           </ul>
                         </div>

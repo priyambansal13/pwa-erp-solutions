@@ -38,9 +38,9 @@ const Plans = () => {
                     </li>
                   </ul>
 
-                  <a href="#" class="btn btn-primary d-block px-2 py-3">
+                  <span class="btn btn-primary d-block px-2 py-3">
                     Get Started
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
@@ -70,9 +70,9 @@ const Plans = () => {
                     </li>
                   </ul>
 
-                  <a href="#" class="btn btn-primary d-block px-2 py-3">
+                  <span class="btn btn-primary d-block px-2 py-3">
                     Get Started
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
@@ -102,9 +102,9 @@ const Plans = () => {
                     </li>
                   </ul>
 
-                  <a href="#" class="btn btn-primary d-block px-2 py-3">
+                  <span class="btn btn-primary d-block px-2 py-3">
                     Get Started
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
@@ -134,9 +134,9 @@ const Plans = () => {
                     </li>
                   </ul>
 
-                  <a href="#" class="btn btn-primary d-block px-2 py-3">
+                  <span class="btn btn-primary d-block px-2 py-3">
                     Get Started
-                  </a>
+                  </span>
                 </div>
               </div>
             </div>
