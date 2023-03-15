@@ -3,18 +3,19 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
-import Home from "./Home";
-import About from "./About";
-import Users from "./Users";
-import NavigationBar from "./NavigationBar";
-import Login from "./Login";
-import Register from "./Register";
+import Home from "./components/Home";
+import About from "./components/About";
+import Users from "./components/Users";
+import Login from "./components/Login";
+import Register from "./components/register/Register";
+import { ProtectedRoutes } from "./Routes/ProtectedRoutes";
+import { PublicRoutes } from "./Routes/PublicRoutes";
 
 function App() {
   return (
     <>
       <Router>
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         {/* {[false].map((expand) => (
           <Navbar key={expand} bg="light" expand={expand} className="mb-3">
             <Container fluid>
@@ -70,14 +71,23 @@ function App() {
         ))} */}
 
         <Routes>
-          <Route path="/pwa-erp-solutions/" element={<About />}></Route>
-          <Route path="/pwa-erp-solutions/about" element={<Home />}></Route>
-          <Route path="/pwa-erp-solutions/users" element={<Users />}></Route>
-          <Route path="/pwa-erp-solutions/login" element={<Login />}></Route>
+          <Route element={<PublicRoutes />}>
+            <Route path="/pwa-erp-solutions/" element={<About />} />
+            <Route path="/pwa-erp-solutions/login" element={<Login />} />
+            <Route
+              path="/pwa-erp-solutions/register"
+              element={<Register />}
+            ></Route>
+            <Route path="/pwa-erp-solutions/" element={<About />}></Route>
+          </Route>
+
           <Route
-            path="/pwa-erp-solutions/register"
-            element={<Register />}
-          ></Route>
+            path="/pwa-erp-solutions/dashboard"
+            element={<ProtectedRoutes />}
+          >
+            <Route path="users" element={<Users />} />
+            <Route path="about" element={<Home />}></Route>
+          </Route>
         </Routes>
       </Router>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 import Plans from "./Plans";
-import "./scss/style.scss";
+import "../scss/style.scss";
 const About = () => {
   return (
     <>

@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Register.scss";
+import api from "../../services/api";
 
 const Register = () => {
+  const [formState, setFormState] = useState({});
+
+  const handleChange = (e) => {
+    setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    console.log("formState", formState);
+
+    formState["organization"] = { id: 1 };
+    formState["plan"] = { id: 1 };
+    e.preventDefault();
+    try {
+      let res;
+      // setAppState({ ...appState, loading: true });
+      //const { username, password } = formState;
+      // eslint-disable-next-line
+      switch (e.target.name) {
+        case "SignUp":
+          res = await api.signup(formState);
+          break;
+      }
+      console.log(res.data);
+      // localStorage.setItem("accessToken", accessToken);
+      // localStorage.setItem("refreshToken", refreshToken);
+
+      // window.location.reload();
+    } catch (error) {
+      console.error(error);
+      // setAppState({ ...appState, loading: false });
+      alert(error.response.data.error);
+    }
+  };
   return (
     <>
       <section className="text-center mb-4">
@@ -38,6 +72,8 @@ const Register = () => {
                           id="form3Example1"
                           className="form-control"
                           required
+                          name="firstName"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -50,6 +86,8 @@ const Register = () => {
                           type="text"
                           id="form3Example2"
                           className="form-control"
+                          name="lastName"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -65,6 +103,8 @@ const Register = () => {
                           id="form3Example1"
                           className="form-control"
                           required
+                          name="phoneNumber"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -78,6 +118,8 @@ const Register = () => {
                           id="form3Example3"
                           className="form-control"
                           required
+                          name="username"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -93,6 +135,8 @@ const Register = () => {
                           id="form3Example4"
                           className="form-control"
                           required
+                          name="password"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -106,6 +150,7 @@ const Register = () => {
                           id="form3Example4"
                           className="form-control"
                           required
+                          // onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -138,7 +183,8 @@ const Register = () => {
                           id="form3Example2"
                           className="form-control"
                           required={true}
-                          disabled
+                          name="gstNumber"
+                          onChange={handleChange}
                         />
                       </div>
                     </div>
@@ -193,7 +239,9 @@ const Register = () => {
 
                   <button
                     type="submit"
+                    name="SignUp"
                     className="btn btn-primary btn-block mb-4"
+                    onClick={handleSubmit}
                   >
                     Sign up
                   </button>
