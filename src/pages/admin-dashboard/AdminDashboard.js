@@ -56,7 +56,7 @@ const AdminDashboard = (props) => {
                 <span class="icon">
                   <i class="fas fa-book"></i>
                 </span>
-                <span class="title">Books</span>
+                <span class="title">Roles</span>
               </p>
             </li>
             <li>
@@ -64,7 +64,7 @@ const AdminDashboard = (props) => {
                 <span class="icon">
                   <i class="fas fa-file-video"></i>
                 </span>
-                <span class="title">Movies</span>
+                <span class="title">Organizations</span>
               </p>
             </li>
             <li>
@@ -72,7 +72,7 @@ const AdminDashboard = (props) => {
                 <span class="icon">
                   <i class="fas fa-volleyball-ball"></i>
                 </span>
-                <span class="title">Sports</span>
+                <span class="title">Products</span>
               </p>
             </li>
             <li>
@@ -80,7 +80,7 @@ const AdminDashboard = (props) => {
                 <span class="icon">
                   <i class="fas fa-blog"></i>
                 </span>
-                <span class="title">Blogs</span>
+                <span class="title">Users</span>
               </p>
             </li>
             <li>

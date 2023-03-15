@@ -92,7 +92,7 @@ const NavigationBar = () => {
           </button>
           <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav m-auto">
-              <li class="nav-item active">
+              {/* <li class="nav-item active">
                 <Link to="/pwa-erp-solutions" class="nav-link">
                   Home
                 </Link>
@@ -106,7 +106,7 @@ const NavigationBar = () => {
                 <Link to="/pwa-erp-solutions/users" class="nav-link">
                   Users
                 </Link>
-              </li>
+              </li> */}
               {/* <li class="nav-item">
                 <a href="cases.html" class="nav-link">
                   Case Study

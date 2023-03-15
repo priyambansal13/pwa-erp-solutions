@@ -213,13 +213,13 @@ const Login = () => {
                       </form>
                     </div>
 
-                    {!appState.loading && (
+                    {/* {!appState.loading && (
                       <div className={`show user-info`}>
                         <p>Logged in user:</p>
                         <h4>{appState.isLoggedIn && appState.user.username}</h4>
                         <button onClick={handleLogout}>Log Out</button>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>
