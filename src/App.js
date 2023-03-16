@@ -14,7 +14,7 @@ import { PublicRoutes } from "./Routes/PublicRoutes";
 function App() {
   return (
     <>
-      <Router>
+      <Router basename="/pwa-erp-solutions">
         {/* <NavigationBar /> */}
         {/* {[false].map((expand) => (
           <Navbar key={expand} bg="light" expand={expand} className="mb-3">
