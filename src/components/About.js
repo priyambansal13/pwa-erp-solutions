@@ -1,9 +1,18 @@
 import React from "react";
 import Plans from "./Plans";
 import "../scss/style.scss";
+import NavigationBar from "./NavigationBar";
+import { CircularProgress } from "@mui/material";
+import { Box } from "@mui/system";
 const About = () => {
-  return (
+  const load = false;
+  return load === true ? (
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress />
+    </Box>
+  ) : (
     <>
+      <NavigationBar />
       <div class="hero-wrap">
         <div class="home-slider owl-carousel">
           <div

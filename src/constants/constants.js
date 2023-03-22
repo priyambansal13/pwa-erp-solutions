@@ -1,3 +1,3 @@
-const baseUrl = "http://65.2.69.79:8080/api";
+const baseUrl = "https://3.108.64.25/api";
 
 export { baseUrl };

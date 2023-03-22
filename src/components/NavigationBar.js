@@ -71,7 +71,7 @@ const NavigationBar = () => {
           </a>
           <form action="#" class="searchform order-sm-start order-lg-last">
             <div class="form-group d-flex">
-              <Link to="/pwa-erp-solutions/login" class="form-control pl-3">
+              <Link to="/login" class="form-control pl-3">
                 Login{" "}
               </Link>
               {/* <a  placeholder="" class="form-control pl-3">
