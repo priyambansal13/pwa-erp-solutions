@@ -66,7 +66,7 @@ const NavigationBar = () => {
         id="ftco-navbar"
       >
         <div class="container">
-          <a class="navbar-brand" href="/pwa-erp-solutions">
+          <a class="navbar-brand" href="/">
             Accounting
           </a>
           <form action="#" class="searchform order-sm-start order-lg-last">

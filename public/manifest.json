@@ -1,6 +1,6 @@
 {
-  "short_name": "cra-pwa",
-  "name": "cra-pwa",
+  "short_name": "Phineco",
+  "name": "Phineco",
   "icons": [
     {
       "src": "favicon.ico",
@@ -18,7 +18,7 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": "/pwa-erp-solutions/",
+  "start_url": "/",
   "theme_color": "#F4BD42",
   "background_color": "#2B2929",
   "display": "standalone",

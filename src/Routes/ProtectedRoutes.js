@@ -29,7 +29,7 @@ export const ProtectedRoutes = () => {
   };
 
   if (!accessToken) {
-    return <Navigate to="/pwa-erp-solutions/login" />;
+    return <Navigate to="/login" />;
   }
 
   return (
