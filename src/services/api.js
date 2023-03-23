@@ -1,26 +1,46 @@
-import { axios } from "./axios";
+import { axiosInstance } from "./axios";
 import { baseUrl } from "../constants/constants";
 
 const api = {
   signup: (body) => {
-    return axios.post(`${baseUrl}/auth/signup`, body);
+    return axiosInstance.post(`${baseUrl}/auth/signup`, body);
   },
   login: (body) => {
-    return axios.post(`${baseUrl}/auth/signin`, body);
+    return axiosInstance.post(`${baseUrl}/auth/signin`, body);
   },
   refreshToken: (body) => {
-    return axios.post(`${baseUrl}/auth/ref`, body);
+    return axiosInstance.post(`${baseUrl}/auth/ref`, body);
   },
-  logout: (body) => {
-    return axios.delete(`${baseUrl}/auth/signout`, body);
+  logout: () => {
+    return axiosInstance.post(`${baseUrl}/auth/signout`);
   },
 
   getUserDetails: (body) => {
     console.log(body);
-    return axios.get(`${baseUrl}/users/${body.userId}`);
+    return axiosInstance.get(`${baseUrl}/users/${body.userId}`);
   },
-  getProtected: (body) => {
-    return axios.get(`${baseUrl}/users/${body.id}`);
+
+  addRoles: (body) => {
+    return axiosInstance.post(`${baseUrl}/roles`, body);
+  },
+  deleteRole: (body) => {
+    return axiosInstance.delete(`${baseUrl}/roles/${body.id}`);
+  },
+  updateRoles: (body) => {
+    return axiosInstance.put(`${baseUrl}/roles/${body.id}`, body);
+  },
+
+  getRoles: () => {
+    return axiosInstance.get(`${baseUrl}/roles`);
+  },
+  addOrganization: (body) => {
+    return axiosInstance.post(`${baseUrl}/organizations`, body);
+  },
+  getOrganizations: () => {
+    return axiosInstance.get(`${baseUrl}/organizations`);
+  },
+  deleteOrganization: (body) => {
+    return axiosInstance.delete(`${baseUrl}/organizations/${body.id}`);
   },
 };
 export default api;

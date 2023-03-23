@@ -6,7 +6,7 @@ export const PublicRoutes = () => {
   const accessToken = localStorage.getItem("accessToken");
 
   if (accessToken) {
-    return <Navigate to="/pwa-erp-solutions/dashboard" />;
+    return <Navigate to="/dashboard" />;
   }
 
   return (

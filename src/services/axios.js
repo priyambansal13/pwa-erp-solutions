@@ -1,8 +1,17 @@
 import axios from "axios";
+
 import { baseUrl } from "../constants/constants";
 
+// const agent = new https.Agent({
+//   rejectUnauthorized: false,
+// });
+
+const axiosInstance = axios.create({
+  // httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
+});
+
 //request interceptor to add the auth token header to requests
-axios.interceptors.request.use(
+axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
 
@@ -16,7 +25,7 @@ axios.interceptors.request.use(
   }
 );
 //response interceptor to refresh token on receiving token expired error
-axios.interceptors.response.use(
+axiosInstance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -29,13 +38,13 @@ axios.interceptors.response.use(
       !originalRequest._retry
     ) {
       originalRequest._retry = true;
-      return axios
+      return axiosInstance
         .post(`${baseUrl}/auth/ref`, { token: refreshToken })
         .then((res) => {
           if (res.status === 200) {
             localStorage.setItem("accessToken", res.data.accessToken);
             console.log("Access token refreshed!");
-            return axios(originalRequest);
+            return axiosInstance(originalRequest);
           }
         })
         .catch((res) => {
@@ -76,4 +85,4 @@ axios.interceptors.response.use(
 // );
 //functions to make api calls
 
-export { axios };
+export { axiosInstance };

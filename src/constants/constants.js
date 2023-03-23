@@ -1,3 +1,3 @@
-const baseUrl = "http://65.2.69.79:8080/api";
+const baseUrl = "https://api.phineco.in/api";
 
 export { baseUrl };
