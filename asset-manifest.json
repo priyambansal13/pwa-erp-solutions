@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/pwa-erp-solutions/static/css/main.48450d29.css",
-    "main.js": "/pwa-erp-solutions/static/js/main.f2e41e70.js",
-    "service-worker.js": "/pwa-erp-solutions/service-worker.js",
-    "index.html": "/pwa-erp-solutions/index.html",
-    "main.48450d29.css.map": "/pwa-erp-solutions/static/css/main.48450d29.css.map",
-    "main.f2e41e70.js.map": "/pwa-erp-solutions/static/js/main.f2e41e70.js.map"
+    "main.css": "/static/css/main.48450d29.css",
+    "main.js": "/static/js/main.bb5e2255.js",
+    "service-worker.js": "/service-worker.js",
+    "index.html": "/index.html",
+    "main.48450d29.css.map": "/static/css/main.48450d29.css.map",
+    "main.bb5e2255.js.map": "/static/js/main.bb5e2255.js.map"
   },
   "entrypoints": [
     "static/css/main.48450d29.css",
-    "static/js/main.f2e41e70.js"
+    "static/js/main.bb5e2255.js"
   ]
 }
