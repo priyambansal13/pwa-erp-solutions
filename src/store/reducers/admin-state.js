@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // initial state
 const initialState = {
-  rolesList: [],
-  organizationList: [],
+  rolesList: null,
+  organizationList: null,
 };
 
 // ==============================|| SLICE - MENU ||============================== //

@@ -7,29 +7,29 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { blue, red } from "@mui/material/colors";
 import { setRolesListAction } from "../../store/reducers/admin-state";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Roles = () => {
   const dispatch = useDispatch();
+  const rolesListState = useSelector((state) => state.adminState.rolesList);
   const [showModal, setShowModal] = useState(false);
   const [rolesList, setRolesList] = useState([]);
   const [selectedRole, setSelectedRole] = useState(null);
 
-  useEffect(() => {
-    getRolesList();
-  }, []);
-
   useEffect(
     () => {
-      console.log("rolesList", rolesList);
-      dispatch(setRolesListAction({ rolesList }));
+      if (rolesListState === null) getRolesList();
+      else {
+        setRolesList(rolesListState);
+      }
     }, // eslint-disable-next-line
-    [rolesList]
+    []
   );
 
   const getRolesList = async () => {
     const response = await api.getRoles();
     setRolesList(response.data);
+    dispatch(setRolesListAction({ rolesList: response.data }));
   };
 
   const getSelectedRoleForEdit = (role) => {
@@ -51,8 +51,7 @@ const Roles = () => {
     const response = await api.addRoles(rolePayload);
     if (response.status === 200) {
       closeModal();
-      const resp = await api.getRoles();
-      setRolesList(resp.data);
+      getRolesList();
     }
   };
 
@@ -60,8 +59,7 @@ const Roles = () => {
     const response = await api.deleteRole(rolePayload);
     if (response.status === 200) {
       closeModal();
-      const resp = await api.getRoles();
-      setRolesList(resp.data);
+      getRolesList();
     }
   };
 
@@ -69,8 +67,7 @@ const Roles = () => {
     const response = await api.updateRoles(rolePayload);
     if (response.status === 200) {
       closeModal();
-      const resp = await api.getRoles();
-      setRolesList(resp.data);
+      getRolesList();
     }
   };
 

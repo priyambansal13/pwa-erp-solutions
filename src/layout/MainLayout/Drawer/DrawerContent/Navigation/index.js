@@ -3,11 +3,17 @@ import { Box, Typography } from "@mui/material";
 
 // project import
 import NavGroup from "./NavGroup";
-import menuItem from "../../../../../menu-items";
+import OrganizationUtilities from "../../../../../menu-items/organization-utilities";
+import AdminUtilities from "../../../../../menu-items/admin-utilities";
+import dashboard from "../../../../../menu-items/dashboard";
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 const Navigation = () => {
+  const userRole = localStorage.getItem("userRole");
+  const utilityGroup =
+    userRole === "ADMIN" ? AdminUtilities : OrganizationUtilities;
+  const menuItem = { items: [dashboard, utilityGroup] };
   const navGroups = menuItem.items.map((item) => {
     switch (item.type) {
       case "group":

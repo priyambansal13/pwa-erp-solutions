@@ -36,7 +36,7 @@ const OrganizationUserRoutes = (isLoggedIn) => [
     children: [
       {
         path: "/",
-        element: <MainLayout />,
+        element: <AdminDashboard />,
       },
       {
         path: "product-stock",
