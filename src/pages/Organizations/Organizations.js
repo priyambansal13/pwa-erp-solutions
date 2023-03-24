@@ -6,15 +6,25 @@ import api from "../../services/api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { blue, red } from "@mui/material/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { setOrganizationListAction } from "../../store/reducers/admin-state";
 
 const Organizations = () => {
+  const dispatch = useDispatch();
+  const organizationListState = useSelector(
+    (state) => state.adminState.organizationList
+  );
   const [showModal, setShowModal] = useState(false);
   const [organizationList, setOrganizationList] = useState(null);
   const [selectedOrganization, setSelectedOrganization] = useState(null);
 
-  useEffect(() => {
-    getOrganizationList();
-  }, []);
+  useEffect(
+    () => {
+      if (organizationListState === null) getOrganizationList();
+      else setOrganizationList(organizationListState);
+    }, // eslint-disable-next-line
+    []
+  );
 
   const closeModal = () => {
     setShowModal(false);
@@ -27,14 +37,14 @@ const Organizations = () => {
   const getOrganizationList = async () => {
     const response = await api.getOrganizations();
     setOrganizationList(response.data);
+    dispatch(setOrganizationListAction({ organizationList: response.data }));
   };
 
   const addOrganization = async (organizationPayload) => {
     const response = await api.addOrganization(organizationPayload);
     if (response.status === 200) {
       closeModal();
-      const resp = await api.getOrganizations();
-      setOrganizationList(resp.data);
+      getOrganizationList();
     }
   };
 
@@ -42,8 +52,7 @@ const Organizations = () => {
     const response = await api.deleteOrganization(organizationPayload);
     if (response.status === 200) {
       closeModal();
-      const resp = await api.getOrganizations();
-      setOrganizationList(resp.data);
+      getOrganizationList();
     }
   };
 
