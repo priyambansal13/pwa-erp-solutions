@@ -18,7 +18,7 @@ const AdminUsers = () => {
       <GridPreview
         showButton={false}
         onAddButtonClick={onAddButtonClick}
-        buttonTitle={"Add User"}
+        buttonTitle={"Users"}
       />
       <BigModalDialog
         modalTitle={"Add User"}

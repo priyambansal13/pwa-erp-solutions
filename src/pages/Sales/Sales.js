@@ -1,10 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BigModalDialog from "../../components/shared/Modal-Dialog/BigModalDialog";
 import GridPreview from "../../components/previewgrids/grid";
 import SalesForm from "../../components/Forms/salesForm";
+import { useDispatch, useSelector } from "react-redux";
+import { getSales } from "../users-dashboard/service";
+import { setSalesListAction } from "../../store/reducers/organization-user.state";
 
 const Sales = () => {
+  const dispatch = useDispatch();
+  const salesListState = useSelector(
+    (state) => state?.organizationUserState?.salesList
+  );
   const [showModal, setShowModal] = useState(false);
+  const [salesList, setSalesList] = useState(null);
+  // const [selectedOrganization, setSelectedOrganization] = useState(null);
+
+  useEffect(
+    () => {
+      console.log(salesList);
+      if (salesListState === null) dispatch(setSalesListAction(getSales()));
+      else setSalesList(salesListState);
+    }, // eslint-disable-next-line
+    []
+  );
   const closeModal = () => {
     setShowModal(false);
   };
@@ -19,7 +37,8 @@ const Sales = () => {
       <GridPreview
         showButton={true}
         onAddButtonClick={onAddButtonClick}
-        buttonTitle={"Add Sale"}
+        buttonTitle={"Sales"}
+        gridData={salesList || []}
       />
       <BigModalDialog
         modalTitle={"Add Sale"}
@@ -27,7 +46,7 @@ const Sales = () => {
         closeModal={closeModal}
         submitModal={submitModal}
         modalBody={SalesForm}
-        width={400}
+        width={600}
       />
     </>
   );

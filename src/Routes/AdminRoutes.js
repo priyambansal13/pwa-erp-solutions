@@ -2,7 +2,7 @@
 //import Loadable from "components/Loadable";
 import MainLayout from "../layout/MainLayout";
 import AdminDashboard from "../pages/admin-dashboard/AdminDashboard";
-import About from "../components/About";
+import LandingPage from "../components/LandingPage";
 import Login from "../pages/authentication/Login/Login";
 import Register from "../pages/authentication/register/Register";
 import Products from "../pages/Products/Products";
@@ -30,8 +30,9 @@ import Roles from "../pages/Roles/Roles";
 
 const AdminRoutes = (isLoggedIn) => [
   {
+    exact: true,
     path: "/",
-    element: isLoggedIn ? <MainLayout /> : <About />,
+    element: isLoggedIn ? <MainLayout /> : <LandingPage />,
     children: [
       {
         path: "/",
@@ -50,10 +51,7 @@ const AdminRoutes = (isLoggedIn) => [
           },
         ],
       },
-      {
-        path: "sample-page",
-        element: <AdminDashboard />,
-      },
+
       {
         path: "organizations",
         element: <Organizations />,
@@ -70,10 +68,12 @@ const AdminRoutes = (isLoggedIn) => [
   },
   {
     path: "/login",
+    exact: true,
     element: <Login />,
   },
   {
     path: "/register",
+    exact: true,
     element: <Register />,
   },
 ];

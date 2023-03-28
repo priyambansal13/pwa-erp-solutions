@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
-import api from "../../../services/api";
+import api from "../../../services/common-api";
 import { useNavigate } from "react-router-dom";
 import {
   Button,

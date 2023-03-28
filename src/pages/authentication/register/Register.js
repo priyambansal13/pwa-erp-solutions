@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Register.scss";
-import api from "../../../services/api";
+import api from "../../../services/common-api";
 import AuthWrapper from "../AuthWrapper";
 import { Grid, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";

@@ -4,7 +4,7 @@ import "../scss/style.scss";
 import NavigationBar from "./NavigationBar";
 import { CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
-const About = () => {
+const LandingPage = () => {
   const load = false;
   return load === true ? (
     <Box sx={{ display: "flex" }}>
@@ -909,4 +909,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default LandingPage;

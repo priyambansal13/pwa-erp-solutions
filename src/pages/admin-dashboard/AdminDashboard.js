@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import api from "../../services/api";
+import api from "../../services/common-api";
+import AdminUserApi from "../../services/admin-user-api";
 import {
   setOrganizationListAction,
   setRolesListAction,
-} from "../../store/reducers/admin-state";
+} from "../../store/reducers/admin-user.state";
 import { setUserDetails } from "../../store/reducers/authentication";
 import "./adminDashboard.scss";
 
@@ -25,7 +26,7 @@ const AdminDashboard = (props) => {
   );
 
   const getRolesList = async () => {
-    const response = await api.getRoles();
+    const response = await AdminUserApi.getRoles();
 
     dispatch(setRolesListAction({ rolesList: response.data }));
   };
@@ -39,7 +40,7 @@ const AdminDashboard = (props) => {
   };
 
   const getOrganizationList = async () => {
-    const response = await api.getOrganizations();
+    const response = await AdminUserApi.getOrganizations();
     dispatch(setOrganizationListAction({ organizationList: response.data }));
   };
   return (
