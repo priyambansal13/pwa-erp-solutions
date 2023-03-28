@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import BigModalDialog from "../../components/shared/Modal-Dialog/BigModalDialog";
 import GridPreview from "../../components/previewgrids/grid";
 import OrganizationForm from "../../components/Forms/organizationForm";
-import api from "../../services/api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { blue, red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
-import { setOrganizationListAction } from "../../store/reducers/admin-state";
+import { setOrganizationListAction } from "../../store/reducers/admin-user.state";
+import AdminUserApi from "../../services/admin-user-api";
 
 const Organizations = () => {
   const dispatch = useDispatch();
   const organizationListState = useSelector(
-    (state) => state.adminState.organizationList
+    (state) => state?.adminState?.organizationList
   );
   const [showModal, setShowModal] = useState(false);
   const [organizationList, setOrganizationList] = useState(null);
@@ -35,13 +35,13 @@ const Organizations = () => {
   };
 
   const getOrganizationList = async () => {
-    const response = await api.getOrganizations();
+    const response = await AdminUserApi.getOrganizations();
     setOrganizationList(response.data);
     dispatch(setOrganizationListAction({ organizationList: response.data }));
   };
 
   const addOrganization = async (organizationPayload) => {
-    const response = await api.addOrganization(organizationPayload);
+    const response = await AdminUserApi.addOrganization(organizationPayload);
     if (response.status === 200) {
       closeModal();
       getOrganizationList();
@@ -49,7 +49,7 @@ const Organizations = () => {
   };
 
   const deleteOrganization = async (organizationPayload) => {
-    const response = await api.deleteOrganization(organizationPayload);
+    const response = await AdminUserApi.deleteOrganization(organizationPayload);
     if (response.status === 200) {
       closeModal();
       getOrganizationList();

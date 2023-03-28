@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import BigModalDialog from "../../components/shared/Modal-Dialog/BigModalDialog";
 import GridPreview from "../../components/previewgrids/grid";
 import RoleForm from "../../components/Forms/roleForm";
-import api from "../../services/api";
+import AdminUserApi from "../../services/admin-user-api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { blue, red } from "@mui/material/colors";
-import { setRolesListAction } from "../../store/reducers/admin-state";
+import { setRolesListAction } from "../../store/reducers/admin-user.state";
 import { useDispatch, useSelector } from "react-redux";
 
 const Roles = () => {
   const dispatch = useDispatch();
-  const rolesListState = useSelector((state) => state.adminState.rolesList);
+  const rolesListState = useSelector((state) => state?.adminState?.rolesList);
   const [showModal, setShowModal] = useState(false);
   const [rolesList, setRolesList] = useState([]);
   const [selectedRole, setSelectedRole] = useState(null);
@@ -27,7 +27,7 @@ const Roles = () => {
   );
 
   const getRolesList = async () => {
-    const response = await api.getRoles();
+    const response = await AdminUserApi.getRoles();
     setRolesList(response.data);
     dispatch(setRolesListAction({ rolesList: response.data }));
   };
@@ -48,7 +48,7 @@ const Roles = () => {
   };
 
   const addRole = async (rolePayload) => {
-    const response = await api.addRoles(rolePayload);
+    const response = await AdminUserApi.addRoles(rolePayload);
     if (response.status === 200) {
       closeModal();
       getRolesList();
@@ -56,7 +56,7 @@ const Roles = () => {
   };
 
   const deleteRole = async (rolePayload) => {
-    const response = await api.deleteRole(rolePayload);
+    const response = await AdminUserApi.deleteRole(rolePayload);
     if (response.status === 200) {
       closeModal();
       getRolesList();
@@ -64,7 +64,7 @@ const Roles = () => {
   };
 
   const updateRole = async (rolePayload) => {
-    const response = await api.updateRoles(rolePayload);
+    const response = await AdminUserApi.updateRoles(rolePayload);
     if (response.status === 200) {
       closeModal();
       getRolesList();

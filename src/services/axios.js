@@ -2,13 +2,7 @@ import axios from "axios";
 
 import { baseUrl } from "../constants/constants";
 
-// const agent = new https.Agent({
-//   rejectUnauthorized: false,
-// });
-
-const axiosInstance = axios.create({
-  // httpsAgent: new (require("https").Agent)({ rejectUnauthorized: false }),
-});
+const axiosInstance = axios.create({});
 
 //request interceptor to add the auth token header to requests
 axiosInstance.interceptors.request.use(

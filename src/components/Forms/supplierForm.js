@@ -11,9 +11,19 @@ import isEmpty from "lodash/isEmpty";
 import { Button, Space } from "antd";
 import { useSelector } from "react-redux";
 
-const OrganizationForm = (props) => {
+const SupplierForm = (props) => {
   const rolesListState = useSelector((state) => state.adminState.rolesList);
   const [formState, setFormState] = useState(null);
+
+  useEffect(
+    () => {
+      // if (rolesListState.length > 0) {
+      //   const role= {};
+      //   role[""]
+      // }
+    }, // eslint-disable-next-line
+    []
+  );
 
   const getRolesMenuItem = () => {
     return rolesListState?.length > 0 ? (
@@ -59,7 +69,7 @@ const OrganizationForm = (props) => {
                 <TextField
                   required
                   id="outlined-required"
-                  label="Organization Name"
+                  label="Name"
                   name="name"
                   InputProps={{
                     readOnly: false,
@@ -202,4 +212,4 @@ const OrganizationForm = (props) => {
     </>
   );
 };
-export default OrganizationForm;
+export default SupplierForm;

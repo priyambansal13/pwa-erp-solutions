@@ -1,5 +1,5 @@
 export default function swDev() {
-  let swUrl = `${process.env.PUBLIC_URL}/sw.js`;
+  let swUrl = `${window.location.origin}/sw.js`;
   navigator.serviceWorker
     .register(swUrl)
     .then((registration) => navigator.serviceWorker.ready)

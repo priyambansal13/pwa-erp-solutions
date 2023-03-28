@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Stack, TextField, MenuItem, FormControl } from "@mui/material";
+import {
+  Grid,
+  Stack,
+  TextField,
+  MenuItem,
+  FormControl,
+  Box,
+} from "@mui/material";
+import { Button, Space } from "antd";
+import isEmpty from "lodash/isEmpty";
 
-const ProductForm = () => {
+const ProductForm = (props) => {
   const [formState, setFormState] = useState({});
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
@@ -10,6 +19,9 @@ const ProductForm = () => {
   useEffect(() => {
     console.log(formState);
   }, [formState]);
+  const resetFormState = () => {
+    setFormState(null);
+  };
   return (
     <>
       <form style={{ marginTop: "30px", marginBottom: "20px" }}>
@@ -99,6 +111,41 @@ const ProductForm = () => {
                 onChange={handleChange}
               />
             </Stack>
+          </Grid>
+          <Grid item xs={12}>
+            <Box display="flex" justifyContent="flex-end">
+              <Space wrap>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    resetFormState();
+                    props.closeModal();
+                  }}
+                >
+                  Cancel
+                </Button>
+
+                {isEmpty(props.selectedDataForEdit) ? (
+                  <Button
+                    onClick={() => props.submitData(formState)}
+                    ghost
+                    type="primary"
+                  >
+                    Save
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      // props.updateData(formState);
+                    }}
+                    ghost
+                    type="primary"
+                  >
+                    Update
+                  </Button>
+                )}
+              </Space>
+            </Box>
           </Grid>
         </Grid>
       </form>

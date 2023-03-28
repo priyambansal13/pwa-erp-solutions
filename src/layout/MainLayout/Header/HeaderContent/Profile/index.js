@@ -33,7 +33,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import api from "../../../../../services/api";
+import api from "../../../../../services/common-api";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {

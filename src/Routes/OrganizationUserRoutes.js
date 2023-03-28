@@ -1,8 +1,7 @@
 // project import
 //import Loadable from "components/Loadable";
 import MainLayout from "../layout/MainLayout";
-import AdminDashboard from "../pages/admin-dashboard/AdminDashboard";
-import About from "../components/About";
+import LandingPage from "../components/LandingPage";
 import Login from "../pages/authentication/Login/Login";
 import Register from "../pages/authentication/register/Register";
 import Sales from "../pages/Sales/Sales";
@@ -10,6 +9,7 @@ import Purchase from "../pages/Purchase/Purchase";
 import Suppliers from "../pages/Suppliers/Suppliers";
 import Stock from "../pages/Stock/Stock";
 import Customers from "../pages/Customers/Customers";
+import UsersDashboard from "../pages/users-dashboard/UsersDashboard";
 
 // render - dashboard
 //const DashboardDefault = Loadable(lazy(() => import("pages/dashboard")));
@@ -31,12 +31,13 @@ import Customers from "../pages/Customers/Customers";
 
 const OrganizationUserRoutes = (isLoggedIn) => [
   {
+    exact: true,
     path: "/",
-    element: isLoggedIn ? <MainLayout /> : <About />,
+    element: isLoggedIn ? <MainLayout /> : <LandingPage />,
     children: [
       {
         path: "/",
-        element: <AdminDashboard />,
+        element: <UsersDashboard />,
       },
       {
         path: "product-stock",
@@ -47,7 +48,7 @@ const OrganizationUserRoutes = (isLoggedIn) => [
         children: [
           {
             path: "default",
-            element: <AdminDashboard />,
+            element: <UsersDashboard />,
           },
         ],
       },
@@ -71,10 +72,12 @@ const OrganizationUserRoutes = (isLoggedIn) => [
   },
   {
     path: "/login",
+    exact: true,
     element: <Login />,
   },
   {
     path: "/register",
+    exact: true,
     element: <Register />,
   },
 ];
