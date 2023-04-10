@@ -8,15 +8,16 @@ const initialState = {
   customersList: null,
   suppliersList: null,
   purchaseList: null,
+  stockList: null,
 };
 
 // ==============================|| SLICE - MENU ||============================== //
 
 const organizationUserState = createSlice({
-  name: "adminState",
+  name: "organizationUserState",
   initialState,
   reducers: {
-    setProductsListAction(state, action) {
+    setProductsForOrganizationListAction(state, action) {
       state.productsList = action.payload.productsList;
     },
     setCustomersListAction(state, action) {
@@ -31,15 +32,19 @@ const organizationUserState = createSlice({
     setPurchaseListAction(state, action) {
       state.purchaseList = action.payload.purchaseList;
     },
+    setStockListAction(state, action) {
+      state.stockList = action.payload.stocksList;
+    },
   },
 });
 
 export default organizationUserState.reducer;
 
 export const {
-  setProductsListAction,
+  setProductsForOrganizationListAction,
   setCustomersListAction,
   setSuppliersListAction,
   setSalesListAction,
   setPurchaseListAction,
+  setStockListAction,
 } = organizationUserState.actions;

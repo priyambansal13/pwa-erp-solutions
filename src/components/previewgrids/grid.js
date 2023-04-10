@@ -1,8 +1,8 @@
 import React from "react";
 import "./previewgrid.scss";
-import { Button, Form, InputNumber, Popconfirm, Table, Typography } from "antd";
+import { Button, Form, Popconfirm, Table, Typography } from "antd";
 import { useState } from "react";
-import { Input } from "@mui/material";
+// import { Input } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
 // import { Add } from "@mui/icons-material";
@@ -15,40 +15,7 @@ for (let i = 0; i < 100; i++) {
     address: `London Park no. ${i}`,
   });
 }
-const EditableCell = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = inputType === "number" ? <InputNumber /> : <Input />;
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
+
 const GridPreview = ({
   showButton,
   buttonTitle,
@@ -161,12 +128,12 @@ const GridPreview = ({
   return (
     <Form form={form} component={false}>
       <Table
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        bordered
+        // components={{
+        //   body: {
+        //     cell: EditableCell,
+        //   },
+        // }}
+        // bordered
         title={() => {
           return (
             <>
@@ -191,7 +158,10 @@ const GridPreview = ({
         }}
         dataSource={gridData || originData}
         columns={columnsList || mergedColumns}
-        rowClassName="editable-row"
+        // rowClassName="editable-row"
+        scroll={{
+          x: 450,
+        }}
         // pagination={{
         //   onChange: cancel,
         // }}

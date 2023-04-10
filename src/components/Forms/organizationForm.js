@@ -78,7 +78,13 @@ const OrganizationForm = (props) => {
                   select
                   label="Role"
                   name="role"
-                  value={formState !== null ? formState?.roles[0].id : ""}
+                  value={
+                    formState !== null
+                      ? formState?.roles?.length > 0
+                        ? formState?.roles[0].id
+                        : ""
+                      : ""
+                  }
                   required
                 >
                   {getRolesMenuItem()}

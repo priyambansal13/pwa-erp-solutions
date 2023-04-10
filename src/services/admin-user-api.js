@@ -24,5 +24,12 @@ const AdminUserApi = {
   deleteOrganization: (body) => {
     return axiosInstance.delete(`${baseUrl}/organizations/${body.id}`);
   },
+
+  addProduct: (body) => {
+    return axiosInstance.post(`${baseUrl}/inventories`, body);
+  },
+  getProducts: () => {
+    return axiosInstance.get(`${baseUrl}/inventories`);
+  },
 };
 export default AdminUserApi;

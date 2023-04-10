@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   rolesList: null,
   organizationList: null,
+  productsList: null,
 };
 
 // ==============================|| SLICE - MENU ||============================== //
@@ -19,10 +20,16 @@ const adminState = createSlice({
     setOrganizationListAction(state, action) {
       state.organizationList = action.payload.organizationList;
     },
+    setProductListAction(state, action) {
+      state.productsList = action.payload.productsList;
+    },
   },
 });
 
 export default adminState.reducer;
 
-export const { setRolesListAction, setOrganizationListAction } =
-  adminState.actions;
+export const {
+  setRolesListAction,
+  setOrganizationListAction,
+  setProductListAction,
+} = adminState.actions;

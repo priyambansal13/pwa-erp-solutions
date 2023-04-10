@@ -9,16 +9,44 @@ import {
 } from "@mui/material";
 import { Button, Space } from "antd";
 import isEmpty from "lodash/isEmpty";
+import { useSelector } from "react-redux";
 
 const ProductForm = (props) => {
-  const [formState, setFormState] = useState({});
+  const [formState, setFormState] = useState(null);
+  const organizationListState = useSelector(
+    (state) => state?.adminState?.organizationList
+  );
   const handleChange = (e) => {
-    setFormState({ ...formState, [e.target.name]: e.target.value });
+    if (e.target.name === "organization") {
+      let selectedOrganization = organizationListState.find(
+        (organization) => organization.id === e.target.value
+      );
+      setFormState({ ...formState, organization: selectedOrganization });
+    } else setFormState({ ...formState, [e.target.name]: e.target.value });
+  };
+
+  const getOrganizationMenuItem = () => {
+    return organizationListState?.length > 0 ? (
+      organizationListState.map((organization) => {
+        return (
+          organization.id !== "1" && (
+            <MenuItem key={organization.id} value={organization.id}>
+              <em>{organization.name}</em>
+            </MenuItem>
+          )
+        );
+      })
+    ) : (
+      <MenuItem key={1} value="">
+        NONE
+      </MenuItem>
+    );
   };
 
   useEffect(() => {
     console.log(formState);
   }, [formState]);
+
   const resetFormState = () => {
     setFormState(null);
   };
@@ -38,6 +66,8 @@ const ProductForm = (props) => {
                   }}
                   InputLabelProps={{ shrink: true }}
                   error={false}
+                  name="name"
+                  value={formState !== null ? formState.name : ""}
                   onChange={handleChange}
                 />
               </FormControl>
@@ -48,7 +78,9 @@ const ProductForm = (props) => {
                   InputLabelProps={{ shrink: true }}
                   select // tell TextField to render select
                   label="Unit"
+                  name="unit"
                   required
+                  value={formState !== null ? formState.unit : ""}
                 >
                   <MenuItem key={1} value="">
                     <em>None</em>
@@ -70,30 +102,46 @@ const ProductForm = (props) => {
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <Stack spacing={1}>
-              <FormControl sx={{ width: "100%" }}>
+            <Stack spacing={1} direction="row">
+              <FormControl sx={{ width: "70%" }}>
                 <TextField
                   id="outlined-required"
                   onChange={handleChange}
                   InputLabelProps={{ shrink: true }}
                   select
                   label="Organization"
+                  name="organization"
                   required
+                  value={formState !== null ? formState?.organization?.id : ""}
                 >
-                  <MenuItem key={1} value="">
-                    <em>None</em>
+                  {getOrganizationMenuItem()}
+                </TextField>
+              </FormControl>
+              <FormControl sx={{ width: "30%" }}>
+                <TextField
+                  id="outlined-required"
+                  onChange={handleChange}
+                  InputLabelProps={{ shrink: true }}
+                  select
+                  label="Tax"
+                  name="taxPercent"
+                  required
+                  value={formState !== null ? formState.taxPercent : ""}
+                >
+                  <MenuItem key={1} value={0}>
+                    <em>0%</em>
                   </MenuItem>
-                  <MenuItem key={2} value="A">
-                    Haldiram
+                  <MenuItem key={2} value={5}>
+                    5%
                   </MenuItem>
-                  <MenuItem key={3} value="B">
-                    Brijwasi
+                  <MenuItem key={3} value={10}>
+                    10%
                   </MenuItem>
-                  <MenuItem key={4} value="C">
-                    Tim Horton
+                  <MenuItem key={4} value={15}>
+                    15%
                   </MenuItem>
-                  <MenuItem key={5} value="D">
-                    Dunkin & Donuts
+                  <MenuItem key={5} value={30}>
+                    30%
                   </MenuItem>
                 </TextField>
               </FormControl>
@@ -107,8 +155,10 @@ const ProductForm = (props) => {
                 required
                 multiline
                 rows={4}
+                name="description"
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
+                value={formState !== null ? formState.description : ""}
               />
             </Stack>
           </Grid>

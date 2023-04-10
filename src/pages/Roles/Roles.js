@@ -8,6 +8,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { blue, red } from "@mui/material/colors";
 import { setRolesListAction } from "../../store/reducers/admin-user.state";
 import { useDispatch, useSelector } from "react-redux";
+import { Tooltip } from "@mui/material";
 
 const Roles = () => {
   const dispatch = useDispatch();
@@ -91,20 +92,24 @@ const Roles = () => {
       render: (_, role) => {
         return (
           <>
-            <ModeEditIcon
-              onClick={() => getSelectedRoleForEdit(role)}
-              color="primary"
-              style={{}}
-              sx={{ color: blue[500] }}
-            />
-
-            <DeleteIcon
-              onClick={() => deleteRole(role)}
-              style={{
-                marginLeft: 15,
-              }}
-              sx={{ color: red[400] }}
-            />
+            <Tooltip title="Edit Role">
+              <ModeEditIcon
+                onClick={() => getSelectedRoleForEdit(role)}
+                color="primary"
+                style={{ cursor: "pointer" }}
+                sx={{ color: blue[500] }}
+              />
+            </Tooltip>
+            <Tooltip title="Delete Role">
+              <DeleteIcon
+                onClick={() => deleteRole(role)}
+                style={{
+                  marginLeft: 20,
+                  cursor: "pointer",
+                }}
+                sx={{ color: red[400] }}
+              />
+            </Tooltip>
           </>
         );
       },

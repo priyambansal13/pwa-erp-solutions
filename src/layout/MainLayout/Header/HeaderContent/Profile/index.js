@@ -34,6 +34,7 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import api from "../../../../../services/common-api";
+import { useSelector } from "react-redux";
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -68,6 +69,9 @@ function a11yProps(index) {
 const Profile = () => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const userDetails = useSelector(
+    (state) => state?.authentication?.userDetails
+  );
 
   const handleLogout = async () => {
     await api.logout();
@@ -120,7 +124,7 @@ const Profile = () => {
             src={avatar1}
             sx={{ width: 32, height: 32 }}
           />
-          <Typography variant="subtitle1">John Doe</Typography>
+          <Typography variant="subtitle1">{userDetails?.username}</Typography>
         </Stack>
       </ButtonBase>
       <Popper
@@ -175,9 +179,11 @@ const Profile = () => {
                               sx={{ width: 32, height: 32 }}
                             />
                             <Stack>
-                              <Typography variant="h6">John Doe</Typography>
+                              <Typography variant="h6">
+                                {userDetails?.username}
+                              </Typography>
                               <Typography variant="body2" color="textSecondary">
-                                UI/UX Designer
+                                {userDetails?.organization?.name}
                               </Typography>
                             </Stack>
                           </Stack>
