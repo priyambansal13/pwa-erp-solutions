@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <ThemeCustomization>
-        <Router basename="/">
+        <Router >
           <Routes />
         </Router>
       </ThemeCustomization>
