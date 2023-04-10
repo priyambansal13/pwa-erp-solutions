@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  FormControl,
-  Grid,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Box, FormControl, Grid, Stack, TextField } from "@mui/material";
 import isEmpty from "lodash/isEmpty";
 import { Button, Space } from "antd";
 import { useSelector } from "react-redux";
@@ -25,21 +18,21 @@ const SupplierForm = (props) => {
     []
   );
 
-  const getRolesMenuItem = () => {
-    return rolesListState?.length > 0 ? (
-      rolesListState.map((role) => {
-        return (
-          <MenuItem key={role.id} value={role.id}>
-            {role.name}
-          </MenuItem>
-        );
-      })
-    ) : (
-      <MenuItem key={1} value="">
-        NONE
-      </MenuItem>
-    );
-  };
+  // const getRolesMenuItem = () => {
+  //   return rolesListState?.length > 0 ? (
+  //     rolesListState.map((role) => {
+  //       return (
+  //         <MenuItem key={role.id} value={role.id}>
+  //           {role.name}
+  //         </MenuItem>
+  //       );
+  //     })
+  //   ) : (
+  //     <MenuItem key={1} value="">
+  //       NONE
+  //     </MenuItem>
+  //   );
+  // };
 
   useEffect(() => {
     console.log("selectedDataForEdit", props.selectedDataForEdit);
@@ -64,8 +57,8 @@ const SupplierForm = (props) => {
       <form style={{ marginTop: "30px", marginBottom: "20px" }}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Stack spacing={1} direction="row">
-              <FormControl sx={{ width: "50%" }}>
+            <Stack spacing={1}>
+              <FormControl sx={{ width: "100%" }}>
                 <TextField
                   required
                   id="outlined-required"
@@ -80,26 +73,11 @@ const SupplierForm = (props) => {
                   value={formState !== null ? formState.name : ""}
                 />
               </FormControl>
-              <FormControl sx={{ m: 1, width: "50%" }}>
-                <TextField
-                  id="outlined-required"
-                  onChange={handleChange}
-                  InputLabelProps={{ shrink: true }}
-                  select
-                  label="Role"
-                  name="role"
-                  value={formState !== null ? formState?.roles[0].id : ""}
-                  required
-                >
-                  {getRolesMenuItem()}
-                </TextField>
-              </FormControl>
             </Stack>
           </Grid>
-
           <Grid item xs={12}>
-            <Stack spacing={1} direction="row">
-              <FormControl sx={{ width: "50%" }}>
+            <Stack spacing={2}>
+              <FormControl sx={{ width: "100%" }}>
                 <TextField
                   required
                   type={"number"}
@@ -115,23 +93,11 @@ const SupplierForm = (props) => {
                   value={formState !== null ? formState.phoneNumber : ""}
                 />
               </FormControl>
-              <FormControl sx={{ m: 1, width: "50%" }}>
-                <TextField
-                  type={"email"}
-                  id="outlined-required"
-                  onChange={handleChange}
-                  InputLabelProps={{ shrink: true }}
-                  label="Email"
-                  name="email"
-                  value={formState !== null ? formState.email : ""}
-                  required
-                ></TextField>
-              </FormControl>
             </Stack>
           </Grid>
           <Grid item xs={12}>
-            <Stack spacing={1} direction="row">
-              <FormControl sx={{ width: "50%" }}>
+            <Stack spacing={2}>
+              <FormControl sx={{ width: "100%" }}>
                 <TextField
                   required
                   id="outlined-required"
@@ -146,32 +112,36 @@ const SupplierForm = (props) => {
                   value={formState !== null ? formState.gstNumber : ""}
                 />
               </FormControl>
-              <FormControl sx={{ m: 1, width: "50%" }}>
+              {/* <FormControl sx={{ m: 1, width: "100%" }}>
                 <TextField
+                  type={"email"}
                   id="outlined-required"
                   onChange={handleChange}
                   InputLabelProps={{ shrink: true }}
-                  label="Address"
-                  name="address"
-                  value={formState !== null ? formState.address : ""}
+                  label="Email"
+                  name="email"
+                  value={formState !== null ? formState.email : ""}
                   required
                 ></TextField>
-              </FormControl>
+              </FormControl> */}
             </Stack>
           </Grid>
-          {/* <Grid item xs={12}>
-            <Stack spacing={1}>
+
+          <Grid item xs={12}>
+            <Stack spacing={2}>
               <TextField
                 id="outlined-multiline-static"
-                label="Description"
+                label="Address"
                 required
                 multiline
                 rows={4}
+                name="address"
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
+                value={formState !== null ? formState.address : ""}
               />
             </Stack>
-          </Grid> */}
+          </Grid>
           <Grid item xs={12}>
             <Box display="flex" justifyContent="flex-end">
               <Space wrap>

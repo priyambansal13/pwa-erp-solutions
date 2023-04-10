@@ -4,6 +4,7 @@ import api from "../../services/common-api";
 import AdminUserApi from "../../services/admin-user-api";
 import {
   setOrganizationListAction,
+  setProductListAction,
   setRolesListAction,
 } from "../../store/reducers/admin-user.state";
 import { setUserDetails } from "../../store/reducers/authentication";
@@ -11,7 +12,7 @@ import "./adminDashboard.scss";
 
 const AdminDashboard = (props) => {
   const dispatch = useDispatch();
-  const userDetails = localStorage.getItem("userDetails");
+  // const userDetails = localStorage.getItem("userDetails");
   const userId = localStorage.getItem("userId");
 
   useEffect(
@@ -20,6 +21,7 @@ const AdminDashboard = (props) => {
         getUserDetails(userId);
         getRolesList();
         getOrganizationList();
+        getProductsList();
       }
     }, // eslint-disable-next-line
     []
@@ -29,6 +31,11 @@ const AdminDashboard = (props) => {
     const response = await AdminUserApi.getRoles();
 
     dispatch(setRolesListAction({ rolesList: response.data }));
+  };
+  const getProductsList = async () => {
+    const response = await AdminUserApi.getProducts();
+
+    dispatch(setProductListAction({ productsList: response.data }));
   };
 
   const getUserDetails = async (userId) => {
@@ -45,7 +52,7 @@ const AdminDashboard = (props) => {
   };
   return (
     <>
-      <div>Dashboard Page{userDetails}</div>
+      <div>Dashboard Page</div>
     </>
   );
 };

@@ -17,7 +17,11 @@ const BigModalDialog = (props) => {
             closeModal={props.closeModal}
             submitData={props.submitData}
             updateData={props.updateData}
-            selectedDataForEdit={props.selectedDataForEdit}
+            selectedDataForEdit={props.selectedDataForEdit || null}
+            parentComponentData={props.parentComponentData || null}
+            viewType={props.viewType || null}
+            selectedDataForView={props.selectedDataForView || null}
+            modalData={props.modalData}
           />
         }
       </Modal>

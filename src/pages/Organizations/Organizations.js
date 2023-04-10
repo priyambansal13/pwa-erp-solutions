@@ -8,6 +8,7 @@ import { blue, red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { setOrganizationListAction } from "../../store/reducers/admin-user.state";
 import AdminUserApi from "../../services/admin-user-api";
+import { Tooltip } from "@mui/material";
 
 const Organizations = () => {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ const Organizations = () => {
   );
 
   const closeModal = () => {
+    setSelectedOrganization(null);
     setShowModal(false);
   };
 
@@ -56,9 +58,9 @@ const Organizations = () => {
     }
   };
 
-  const getSelectedOrganizationForEdit = (role) => {
-    console.log("role", role);
-    setSelectedOrganization(role);
+  const getSelectedOrganizationForEdit = (organization) => {
+    console.log("organization", organization);
+    setSelectedOrganization(organization);
     onAddButtonClick();
   };
 
@@ -97,23 +99,27 @@ const Organizations = () => {
       title: "Operation",
       dataIndex: "operation",
       width: "10%",
-      render: (_, role) => {
+      render: (_, organization) => {
         return (
           <>
-            <ModeEditIcon
-              onClick={() => getSelectedOrganizationForEdit(role)}
-              color="primary"
-              style={{}}
-              sx={{ color: blue[500] }}
-            />
-
-            <DeleteIcon
-              onClick={() => deleteOrganization(role)}
-              style={{
-                marginLeft: 15,
-              }}
-              sx={{ color: red[400] }}
-            />
+            <Tooltip title="Edit Organization">
+              <ModeEditIcon
+                onClick={() => getSelectedOrganizationForEdit(organization)}
+                color="primary"
+                style={{ cursor: "pointer" }}
+                sx={{ color: blue[500] }}
+              />
+            </Tooltip>
+            <Tooltip title="Delete Organization">
+              <DeleteIcon
+                onClick={() => deleteOrganization(organization)}
+                style={{
+                  marginLeft: 20,
+                  cursor: "pointer",
+                }}
+                sx={{ color: red[400] }}
+              />
+            </Tooltip>
           </>
         );
       },

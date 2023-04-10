@@ -1,5 +1,10 @@
 
+.selected {
+	border: 2px solid #1ba12d;
 	
+	color:#4fadd2;
+  }
+
 	.plan {
 		background:#f5efef ;
 		border-radius: 6px 1px solid;
@@ -51,6 +56,7 @@
 			
 			
 		}
+		
 		
         .plan-description {
             color: black;

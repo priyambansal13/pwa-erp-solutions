@@ -1,9 +1,10 @@
 import { axiosInstance } from "./axios";
 import { baseUrl } from "../constants/constants";
 
+const userId = localStorage.getItem("userId");
 const OrganizationUserApi = {
   getCustomers: () => {
-    return axiosInstance.get(`${baseUrl}/customer`);
+    return axiosInstance.get(`${baseUrl}/customers`);
   },
   addCustomer: (body) => {
     return axiosInstance.post(`${baseUrl}/customer`, body);
@@ -16,18 +17,24 @@ const OrganizationUserApi = {
   },
 
   //* For Products page
-  getProducts: () => {
-    return axiosInstance.get(`${baseUrl}/roles`);
+  getProductsForOrganization: (id) => {
+    return axiosInstance.get(`${baseUrl}/inventories/organization/${id}`);
   },
 
-  //* For adding stock to product page
-  addStock: (body) => {
-    return axiosInstance.post(`${baseUrl}/stock`, body);
+  //* For stock page
+  getStockList: () => {
+    return axiosInstance.get(`${baseUrl}/stock/user/${userId}`);
+  },
+  addStockForProduct: (body) => {
+    return axiosInstance.post(`${baseUrl}/stock`, {
+      ...body,
+      user: { id: userId },
+    });
   },
 
   //* For Suppliers page
   addSupplier: (body) => {
-    return axiosInstance.post(`${baseUrl}/suppliers`, body);
+    return axiosInstance.post(`${baseUrl}/supplier`, body);
   },
   getSuppliers: () => {
     return axiosInstance.get(`${baseUrl}/suppliers`);
@@ -41,7 +48,10 @@ const OrganizationUserApi = {
 
   //* For Sales page
   addSale: (body) => {
-    return axiosInstance.post(`${baseUrl}/sales`, body);
+    return axiosInstance.post(`${baseUrl}/sale`, {
+      ...body,
+      userId: userId,
+    });
   },
   getSales: () => {
     return axiosInstance.get(`${baseUrl}/sales`);
@@ -55,7 +65,10 @@ const OrganizationUserApi = {
 
   //* For Purchase page
   addPurchase: (body) => {
-    return axiosInstance.post(`${baseUrl}/purchases`, body);
+    return axiosInstance.post(`${baseUrl}/purchase`, {
+      ...body,
+      userId: userId,
+    });
   },
   getPurchases: () => {
     return axiosInstance.get(`${baseUrl}/purchases`);

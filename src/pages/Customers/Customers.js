@@ -4,7 +4,7 @@ import GridPreview from "../../components/previewgrids/grid";
 import CustomerForm from "../../components/Forms/customerForm";
 import { useDispatch, useSelector } from "react-redux";
 import { setCustomersListAction } from "../../store/reducers/organization-user.state";
-import { getCustomers } from "../users-dashboard/service";
+import OrganizationUserApi from "../../services/organization-user-api";
 
 const Customers = () => {
   const dispatch = useDispatch();
@@ -18,8 +18,7 @@ const Customers = () => {
   useEffect(
     () => {
       console.log(customersList);
-      if (customersListState === null)
-        dispatch(setCustomersListAction(getCustomers()));
+      if (customersListState === null) getCustomerList();
       else setCustomersList(customersListState);
     }, // eslint-disable-next-line
     []
@@ -28,12 +27,81 @@ const Customers = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-  const submitModal = () => {
-    setShowModal(false);
-  };
+
   const onAddButtonClick = () => {
     setShowModal(true);
   };
+
+  const getCustomerList = async () => {
+    const response = await OrganizationUserApi.getCustomers();
+    setCustomersList(response.data);
+    dispatch(setCustomersListAction({ customersList: response.data }));
+  };
+
+  const addCustomer = async (customerPayload) => {
+    await OrganizationUserApi.addCustomer(customerPayload);
+    closeModal();
+    getCustomerList();
+  };
+
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      width: "20%",
+      editable: true,
+    },
+    {
+      title: "Mobile No",
+      dataIndex: "phoneNumber",
+      width: "20%",
+      editable: true,
+    },
+    {
+      title: "Gst Number",
+      dataIndex: "gstNumber",
+      width: "20%",
+      editable: true,
+    },
+    {
+      title: "Address",
+      dataIndex: "address",
+      width: "20%",
+      editable: true,
+      responsive: ["md"],
+    },
+
+    // {
+    //   title: "Operation",
+    //   dataIndex: "operation",
+    //   width: "10%",
+    //   render: (_, productStock) => {
+    //     return (
+    //       <>
+    //         <Tooltip title="Edit Stock">
+    //           <ModeEditIcon
+    //             // onClick={() => getSelectedOrganizationForEdit(productStock)}
+    //             color="primary"
+    //             style={{ cursor: "pointer" }}
+    //             sx={{ color: blue[500] }}
+    //           />
+    //         </Tooltip>
+    //         <Tooltip title="Delete Organization">
+    //           <DeleteIcon
+    //             // onClick={() => deleteOrganization(productStock)}
+    //             style={{
+    //               marginLeft: 20,
+    //               cursor: "pointer",
+    //             }}
+    //             sx={{ color: red[400] }}
+    //           />
+    //         </Tooltip>
+    //       </>
+    //     );
+    //   },
+    // },
+  ];
+
   return (
     <>
       <GridPreview
@@ -41,14 +109,15 @@ const Customers = () => {
         onAddButtonClick={onAddButtonClick}
         buttonTitle={"Customers"}
         gridData={customersList || []}
+        columnsList={columns}
       />
       <BigModalDialog
         modalTitle={"Add Customer"}
         showModal={showModal}
         closeModal={closeModal}
-        submitModal={submitModal}
+        submitData={addCustomer}
         modalBody={CustomerForm}
-        width={600}
+        width={350}
       />
     </>
   );
