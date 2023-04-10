@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <ThemeCustomization>
-        <Router >
+        <Router basename="/pwa-erp-solutions" >
           <Routes />
         </Router>
       </ThemeCustomization>
