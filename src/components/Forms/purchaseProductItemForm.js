@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { Badge, Button, Space } from "antd";
+import { Button, Space } from "antd";
 import isEmpty from "lodash/isEmpty";
 import { useSelector } from "react-redux";
 
