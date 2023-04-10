@@ -1,7 +1,7 @@
 {
   "name": "my-app-pwa",
   "version": "0.1.0",
-  "homepage": "https://www.phineco.in",
+  "homepage": "https://www.phineco.in/",
   "private": true,
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
