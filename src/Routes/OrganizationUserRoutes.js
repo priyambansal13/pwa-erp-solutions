@@ -32,40 +32,41 @@ import UsersDashboard from "../pages/users-dashboard/UsersDashboard";
 const OrganizationUserRoutes = (isLoggedIn) => [
   {
     exact: true,
-    path: "/",
+    path: "",
     element: isLoggedIn ? <MainLayout /> : <LandingPage />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <UsersDashboard />,
       },
       {
-        path: "product-stock",
+        path: "/product-stock",
         element: <Stock />,
       },
       {
-        path: "dashboard",
-        children: [
-          {
-            path: "default",
-            element: <UsersDashboard />,
-          },
-        ],
+        path: "/dashboard",
+        element: <UsersDashboard />,
+        // children: [
+        //   {
+        //     path: "./default",
+        //     element: <UsersDashboard />,
+        //   },
+        // ],
       },
       {
-        path: "customers",
+        path: "/customers",
         element: <Customers />,
       },
       {
-        path: "sales",
+        path: "/sales",
         element: <Sales />,
       },
       {
-        path: "purchase",
+        path: "/purchase",
         element: <Purchase />,
       },
       {
-        path: "suppliers",
+        path: "/suppliers",
         element: <Suppliers />,
       },
     ],
