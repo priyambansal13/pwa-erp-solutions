@@ -3,7 +3,7 @@ name: deploy-pwa-erp-solutions
 on:
   push:
     branches:
-      - main
+      - aws
 jobs:
   build:
     runs-on: ubuntu-latest
