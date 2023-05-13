@@ -25,18 +25,41 @@ import { List } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Collapse, theme } from "antd";
 import SaleProductItemForm from "./saleProductItemForm";
+import { checkNullValues } from "../../utils/common-utils";
+import CustomerForm from "./customerForm";
+
+import OrganizationUserApi from "../../services/organization-user-api";
 
 const SalesForm = (props) => {
-  const [formState, setFormState] = useState(null);
+  const DEFAULT_SALES_STATE = {
+    timestamp: null,
+    invoiceNumber: null,
+    salePurchaseItems: null,
+    discount: null,
+    tax: null,
+    totalAmount: null,
+    customerId: null,
+  };
+  const [formState, setFormState] = useState(DEFAULT_SALES_STATE);
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedItemEdit, setSelectedItemEdit] = useState(null);
   const { Panel } = Collapse;
 
-  useEffect(() => {
-    if (props.viewType === "View") {
-      setFormState(props.selectedDataForView);
-    }
-  }, [props]);
+  useEffect(
+    () => {
+      if (props.viewType === "View") {
+        setFormState(props.selectedDataForView);
+      }
+      if (
+        props.selectedDataForEdit === null &&
+        props.selectedDataForView === null
+      ) {
+        getSaleInvoiceNumber();
+      }
+    },
+    // eslint-disable-next-line
+    [props]
+  );
 
   const { token } = theme.useToken();
   const panelStyle = {
@@ -50,34 +73,62 @@ const SalesForm = (props) => {
     (state) => state?.organizationUserState?.customersList
   );
 
+  // const filterOptions = createFilterOptions({
+  //   matchFrom: "any",
+  //   stringify: (option) => option,
+  // });
   const getCustomerMenuItem = () => {
-    return customersListState?.length > 0 ? (
-      customersListState.map((customer) => {
-        return (
-          <MenuItem key={customer.id} value={customer.id}>
-            {customer.name}
-          </MenuItem>
-        );
-      })
-    ) : (
-      <MenuItem key={1} value="--">
-        NONE
-      </MenuItem>
-    );
+    const customerListMenu =
+      customersListState?.length > 0 ? (
+        customersListState.map((customer) => {
+          return (
+            <MenuItem key={customer.id} value={customer.id}>
+              {customer.name}
+            </MenuItem>
+          );
+        })
+      ) : (
+        <MenuItem key={1} value="--">
+          NONE
+        </MenuItem>
+      );
+
+    customerListMenu !== null &&
+      customerListMenu.unshift(
+        <MenuItem key={1} value="add">
+          <em>
+            <b>Add Customer</b>
+          </em>
+        </MenuItem>
+      );
+
+    return customerListMenu;
   };
+
+  const getSaleInvoiceNumber = async () => {
+    const response = await OrganizationUserApi.getNewSaleInvoiceNumber();
+    setFormState({ ...formState, invoiceNumber: response.data });
+    console.log(response);
+    // const stockData = formatStockData(response.data);
+  };
+
   const handleChange = (e) => {
     if (e.target.name === "customer") {
-      let selectedCustomer = customersListState.find(
-        (customer) => customer.id === e.target.value
-      );
-      setFormState({
-        ...formState,
-        customerId: selectedCustomer.id,
-        discount: 0,
-        tax: 0,
-        totalAmount: 0,
-        salePurchaseItems: [],
-      });
+      if (e.target.value === "add") {
+        setShowAddModal(true);
+      } else {
+        let selectedCustomer = customersListState.find(
+          (customer) => customer.id === e.target.value
+        );
+        setFormState({
+          ...formState,
+          customerId: selectedCustomer.id,
+          discount: 0,
+          tax: 0,
+          totalAmount: 0,
+          salePurchaseItems: [],
+        });
+      }
     } else setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
@@ -95,14 +146,16 @@ const SalesForm = (props) => {
   }, [formState]);
 
   const resetFormState = () => {
-    setFormState(null);
+    setFormState(DEFAULT_SALES_STATE);
   };
 
   const onAddItems = (itemPayload) => {
     const salesPayload = cloneDeep(formState);
     let totalAmount = 0;
     let tax = 0;
-
+    if (salesPayload.salePurchaseItems === null) {
+      salesPayload.salePurchaseItems = [];
+    }
     salesPayload.salePurchaseItems.push(itemPayload);
     // eslint-disable-next-line
     salesPayload.salePurchaseItems.map((item) => {
@@ -169,7 +222,9 @@ const SalesForm = (props) => {
                   id="outlined-required"
                   label="Invoice No."
                   name="invoiceNumber"
-                  disabled={props?.viewType === "View"}
+                  InputLabelProps={{ shrink: true }}
+                  // disabled={props?.viewType === "View"}
+                  disabled
                   InputProps={{
                     readOnly: false,
                   }}
@@ -187,7 +242,7 @@ const SalesForm = (props) => {
                         name="timestamp"
                         disabled={props?.viewType === "View"}
                         value={
-                          formState !== null
+                          formState.timestamp !== null
                             ? formatDateString(formState?.timestamp)
                             : null
                         }
@@ -220,17 +275,38 @@ const SalesForm = (props) => {
                 >
                   {getCustomerMenuItem()}
                 </TextField>
+                {/* <Autocomplete
+                  disablePortal
+                  id="combo-box-demo"
+                  options={getCustomerMenuItem()}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Movie" />
+                  )}
+                  InputProps={{
+                    endAdornment: (
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        {/* {options.indexOf(inputValue.trim()) === -1 && ( 
+                        <span
+                          style={{ cursor: "pointer", color: "#1976d2" }}
+                          // onClick={handleAddCustomer}
+                        >
+                          Add Customer
+                        </span>
+                      </div>
+                    ),
+                  }}
+                /> */}
+                {/* <SearchTextField /> */}
               </FormControl>
             </Stack>
           </Grid>
-          {formState?.customerId !== undefined ? (
+          {formState?.customerId !== null ? (
             <>
               <Grid item xs={12}>
                 <Collapse
                   bordered={false}
-                  collapsible={
-                    formState?.customerId === undefined ? "disabled" : ""
-                  }
+                  collapsible={formState?.customerId === null ? "disabled" : ""}
                   expandIcon={({ isActive }) => (
                     <CaretRightOutlined rotate={isActive ? 90 : 0} />
                   )}
@@ -257,7 +333,7 @@ const SalesForm = (props) => {
                             marginTop: "-7px",
                           }}
                           disabled={
-                            formState?.customerId === undefined ||
+                            formState?.customerId === null ||
                             props?.viewType === "View"
                           }
                           onClick={() => {
@@ -423,6 +499,7 @@ const SalesForm = (props) => {
                       }}
                       ghost
                       type="primary"
+                      disabled={checkNullValues(formState, [])}
                     >
                       Save
                     </Button>
@@ -449,6 +526,17 @@ const SalesForm = (props) => {
         submitData={onAddItems}
         updateData={onUpdateItem}
         modalBody={SaleProductItemForm}
+        parentComponentData={formState}
+        selectedDataForEdit={selectedItemEdit}
+        width={400}
+      />
+      <BigModalDialog
+        modalTitle={"Add Customer"}
+        showModal={false}
+        closeModal={closeAddModal}
+        submitData={onAddItems}
+        updateData={onUpdateItem}
+        modalBody={CustomerForm}
         parentComponentData={formState}
         selectedDataForEdit={selectedItemEdit}
         width={400}

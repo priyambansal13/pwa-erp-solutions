@@ -10,6 +10,12 @@ import Suppliers from "../pages/Suppliers/Suppliers";
 import Stock from "../pages/Stock/Stock";
 import Customers from "../pages/Customers/Customers";
 import UsersDashboard from "../pages/users-dashboard/UsersDashboard";
+import UserAccount from "../pages/Account/UserAccount";
+import Payment from "../pages/Payment/Payment";
+import Receipt from "../pages/Receipt/Receipt";
+import PayableTotal from "../pages/PayableTotal/PayableTotal";
+import ReceivableTotal from "../pages/ReceivableTotal/ReceivableTotal";
+import Products from "../pages/Products/Products";
 
 // render - dashboard
 //const DashboardDefault = Loadable(lazy(() => import("pages/dashboard")));
@@ -48,10 +54,22 @@ const OrganizationUserRoutes = (isLoggedIn) => [
         element: <UsersDashboard />,
         // children: [
         //   {
-        //     path: "./default",
-        //     element: <UsersDashboard />,
+        //     path: "/saleTotal",
+        //     element: <Customers />,
         //   },
         // ],
+      },
+      {
+        path: "/dashboard/payableTotal",
+        element: <PayableTotal />,
+      },
+      {
+        path: "/dashboard/receivableTotal",
+        element: <ReceivableTotal />,
+      },
+      {
+        path: "addProducts",
+        element: <Products />,
       },
       {
         path: "/customers",
@@ -68,6 +86,18 @@ const OrganizationUserRoutes = (isLoggedIn) => [
       {
         path: "/suppliers",
         element: <Suppliers />,
+      },
+      {
+        path: "/user-account",
+        element: <UserAccount />,
+      },
+      {
+        path: "/payment",
+        element: <Payment />,
+      },
+      {
+        path: "/receipt",
+        element: <Receipt />,
       },
     ],
   },

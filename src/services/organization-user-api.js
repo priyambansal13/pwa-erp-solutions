@@ -7,34 +7,38 @@ const OrganizationUserApi = {
     return axiosInstance.get(`${baseUrl}/customers`);
   },
   addCustomer: (body) => {
-    return axiosInstance.post(`${baseUrl}/customer`, body);
+    return axiosInstance.post(`${baseUrl}/customers`, body);
   },
   deleteCustomer: (body) => {
-    return axiosInstance.delete(`${baseUrl}/customer/${body.id}`);
+    return axiosInstance.delete(`${baseUrl}/customers/${body.id}`);
   },
   updateCustomer: (body) => {
-    return axiosInstance.put(`${baseUrl}/customer/${body.id}`, body);
+    return axiosInstance.put(`${baseUrl}/customers/${body.id}`, body);
   },
 
   //* For Products page
   getProductsForOrganization: (id) => {
-    return axiosInstance.get(`${baseUrl}/inventories/organization/${id}`);
+    return axiosInstance.get(`${baseUrl}/products/org/${id}`);
   },
 
+  //* Delete Product
+  deleteProduct: (body) => {
+    return axiosInstance.delete(`${baseUrl}/products/${body.id}`);
+  },
   //* For stock page
   getStockList: () => {
-    return axiosInstance.get(`${baseUrl}/stock/user/${userId}`);
+    return axiosInstance.get(`${baseUrl}/stocks/user/${userId}`);
   },
   addStockForProduct: (body) => {
-    return axiosInstance.post(`${baseUrl}/stock`, {
+    return axiosInstance.post(`${baseUrl}/stocks`, {
       ...body,
-      user: { id: userId },
+      // user: { id: userId },
     });
   },
 
   //* For Suppliers page
   addSupplier: (body) => {
-    return axiosInstance.post(`${baseUrl}/supplier`, body);
+    return axiosInstance.post(`${baseUrl}/suppliers`, body);
   },
   getSuppliers: () => {
     return axiosInstance.get(`${baseUrl}/suppliers`);
@@ -48,9 +52,8 @@ const OrganizationUserApi = {
 
   //* For Sales page
   addSale: (body) => {
-    return axiosInstance.post(`${baseUrl}/sale`, {
+    return axiosInstance.post(`${baseUrl}/sales`, {
       ...body,
-      userId: userId,
     });
   },
   getSales: () => {
@@ -63,11 +66,15 @@ const OrganizationUserApi = {
     return axiosInstance.put(`${baseUrl}/sales/${body.id}`, body);
   },
 
+  // * API for getting sales invoice number
+  getNewSaleInvoiceNumber: () => {
+    return axiosInstance.get(`${baseUrl}/sales/new-invoice-number`);
+  },
+
   //* For Purchase page
   addPurchase: (body) => {
-    return axiosInstance.post(`${baseUrl}/purchase`, {
+    return axiosInstance.post(`${baseUrl}/purchases`, {
       ...body,
-      userId: userId,
     });
   },
   getPurchases: () => {
@@ -79,5 +86,102 @@ const OrganizationUserApi = {
   updatePurchase: (body) => {
     return axiosInstance.put(`${baseUrl}/purchases/${body.id}`, body);
   },
+
+  // * API for Payment controller
+
+  getAllPayments: () => {
+    return axiosInstance.get(`${baseUrl}/payments`);
+  },
+  getAllPaymentsForSupplier: (body) => {
+    return axiosInstance.get(`${baseUrl}/payments/supplier/${body.id}`);
+  },
+  getPaymentsPayable: () => {
+    return axiosInstance.get(`${baseUrl}/payments/payable`);
+  },
+  addPayment: (body) => {
+    return axiosInstance.post(`${baseUrl}/payments`, {
+      ...body,
+    });
+  },
+  deletePayment: (body) => {
+    return axiosInstance.delete(`${baseUrl}/payments/${body.id}`);
+  },
+  updatePayment: (body) => {
+    return axiosInstance.put(`${baseUrl}/payments/${body.id}`, body);
+  },
+
+  // * API for Receipt controller
+
+  getAllReceipts: () => {
+    return axiosInstance.get(`${baseUrl}/receipts`);
+  },
+  getAllReceiptsForCustomer: (body) => {
+    return axiosInstance.get(`${baseUrl}/receipts/customer/${body.id}`);
+  },
+  getReceiptsReceivable: () => {
+    return axiosInstance.get(`${baseUrl}/receipts/receivable`);
+  },
+  addReceipt: (body) => {
+    return axiosInstance.post(`${baseUrl}/receipts`, {
+      ...body,
+    });
+  },
+  deleteReceipt: (body) => {
+    return axiosInstance.delete(`${baseUrl}/receipts/${body.id}`);
+  },
+  updateReceipt: (body) => {
+    return axiosInstance.put(`${baseUrl}/receipts/${body.id}`, body);
+  },
+
+  // * API for Bank Account controller
+
+  getBankList: () => {
+    return axiosInstance.get(`${baseUrl}/banks/list`);
+  },
+  getUserAccounts: () => {
+    return axiosInstance.get(`${baseUrl}/banks/accounts`);
+  },
+
+  addAccount: (body) => {
+    return axiosInstance.post(`${baseUrl}/banks`, {
+      ...body,
+    });
+  },
+  // deleteReceipt: (body) => {
+  //   return axiosInstance.delete(`${baseUrl}/banks/${body.id}`);
+  // },
+  updateAccount: (body) => {
+    return axiosInstance.put(`${baseUrl}/banks/${body.id}`, body);
+  },
+
+  // * API for getting expese category for payments as expense
+  getExpenseCategory: () => {
+    return axiosInstance.get(`${baseUrl}/expenses/categories`);
+  },
+
+  // * API for importing products
+  importProductsUserSpecific: (body) => {
+    return axiosInstance.post(
+      `${baseUrl}/upload/products?userId=${userId}`,
+      body,
+      {
+        responseType: "arraybuffer",
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+  },
+  importProductsOrganizationSpecific: (body) => {
+    return axiosInstance.put(
+      `${baseUrl}/upload/products?orgId=${userId}`,
+      body
+    );
+  },
+
+  getProducts: () => {
+    return axiosInstance.get(`${baseUrl}/products/user`);
+  },
 };
+
 export default OrganizationUserApi;

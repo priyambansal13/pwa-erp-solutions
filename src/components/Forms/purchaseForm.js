@@ -23,9 +23,19 @@ import { List } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { Collapse, theme } from "antd";
 import PurchaseProductItemForm from "./purchaseProductItemForm";
+import { checkNullValues } from "../../utils/common-utils";
 
 const PurchaseForm = (props) => {
-  const [formState, setFormState] = useState(null);
+  const DEFAULT_PURCHASE_STATE = {
+    timestamp: null,
+    invoiceNumber: null,
+    salePurchaseItems: null,
+    discount: null,
+    tax: null,
+    totalAmount: null,
+    supplierId: null,
+  };
+  const [formState, setFormState] = useState(DEFAULT_PURCHASE_STATE);
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedItemEdit, setSelectedItemEdit] = useState(null);
   const { Panel } = Collapse;
@@ -93,14 +103,16 @@ const PurchaseForm = (props) => {
   }, [formState]);
 
   const resetFormState = () => {
-    setFormState(null);
+    setFormState(DEFAULT_PURCHASE_STATE);
   };
 
   const onAddItems = (itemPayload) => {
     const salesPayload = cloneDeep(formState);
     let totalAmount = 0;
     let tax = 0;
-
+    if (salesPayload.salePurchaseItems === null) {
+      salesPayload.salePurchaseItems = [];
+    }
     salesPayload.salePurchaseItems.push(itemPayload);
     // eslint-disable-next-line
     salesPayload.salePurchaseItems.map((item) => {
@@ -222,14 +234,12 @@ const PurchaseForm = (props) => {
               </FormControl>
             </Stack>
           </Grid>
-          {formState?.supplierId !== undefined ? (
+          {formState?.supplierId !== null ? (
             <>
               <Grid item xs={12}>
                 <Collapse
                   bordered={false}
-                  collapsible={
-                    formState?.supplierId === undefined ? "disabled" : ""
-                  }
+                  collapsible={formState?.supplierId === null ? "disabled" : ""}
                   expandIcon={({ isActive }) => (
                     <CaretRightOutlined rotate={isActive ? 90 : 0} />
                   )}
@@ -256,7 +266,7 @@ const PurchaseForm = (props) => {
                             marginTop: "-7px",
                           }}
                           disabled={
-                            formState?.supplierId === undefined ||
+                            formState?.supplierId === null ||
                             props?.viewType === "View"
                           }
                           onClick={() => {
@@ -422,6 +432,11 @@ const PurchaseForm = (props) => {
                       }}
                       ghost
                       type="primary"
+                      disabled={
+                        formState !== null
+                          ? checkNullValues(formState, ["status"])
+                          : true
+                      }
                     >
                       Save
                     </Button>

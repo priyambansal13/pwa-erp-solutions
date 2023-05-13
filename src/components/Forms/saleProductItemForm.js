@@ -28,6 +28,10 @@ const SaleProductItemForm = (props) => {
     // }
   }, [props]);
 
+  useEffect(() => {
+    console.log("formPayload", formPayload);
+  }, [formPayload]);
+
   const handleChange = (e) => {
     if (e.target.name === "product") {
       let selectedStock = stocksList.find(
@@ -70,9 +74,13 @@ const SaleProductItemForm = (props) => {
   };
 
   const getProductMenuItem = () => {
+    let selectedSalePurchaseList =
+      props?.parentComponentData?.salePurchaseItems === null
+        ? []
+        : props?.parentComponentData?.salePurchaseItems;
     return stocksList?.length > 0 ? (
       stocksList.map((stock) => {
-        return props?.parentComponentData?.salePurchaseItems.findIndex(
+        return selectedSalePurchaseList.findIndex(
           (item) => item.product.stockId === stock.stockId
         ) === -1 ? (
           <MenuItem key={stock.stockId} value={stock.productId}>

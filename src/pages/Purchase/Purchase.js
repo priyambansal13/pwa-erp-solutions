@@ -5,7 +5,7 @@ import PurchaseForm from "../../components/Forms/purchaseForm";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  setProductsForOrganizationListAction,
+  setProductsListAction,
   setPurchaseListAction,
   setStockListAction,
   setSuppliersListAction,
@@ -17,6 +17,10 @@ import {
   getFormatedPurchasePayload,
   getFormattedPurchaseList,
 } from "../../utils/user-utils";
+import { Tooltip } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ModeEditIcon from "@mui/icons-material/Edit";
+import { red, blue } from "@mui/material/colors";
 
 const Purchase = () => {
   const dispatch = useDispatch();
@@ -63,14 +67,10 @@ const Purchase = () => {
   };
 
   const getProductList = async () => {
-    const response = await OrganizationUserApi.getProductsForOrganization(
-      organizationId
-    );
+    const response = await OrganizationUserApi.getProducts(organizationId);
     // const stockData = formatStockData(response.data);
 
-    dispatch(
-      setProductsForOrganizationListAction({ productsList: response.data })
-    );
+    dispatch(setProductsListAction({ productsList: response.data }));
   };
   const getPurchaseList = async () => {
     const response = await OrganizationUserApi.getPurchases();
@@ -100,6 +100,16 @@ const Purchase = () => {
     setViewType("View");
     setShowModal(true);
   };
+
+  const deletePurchase = async (purchase) => {
+    const response = await OrganizationUserApi.deletePurchase(purchase);
+    if (response.status === 200) {
+      closeModal();
+      getPurchaseList();
+      getStocksList();
+    }
+  };
+
   const columns = [
     {
       title: "Invoice No.",
@@ -119,7 +129,7 @@ const Purchase = () => {
       // key: "invoiceNumber",
     },
     {
-      title: "Customer Name",
+      title: "Supplier Name",
       dataIndex: "name",
       width: "10%",
       editable: true,
@@ -147,35 +157,35 @@ const Purchase = () => {
       //responsive: ["md"],
     },
 
-    // {
-    //   title: "Operation",
-    //   dataIndex: "operation",
-    //   width: "10%",
-    //   render: (_, organization) => {
-    //     return (
-    //       <>
-    //         <Tooltip title="Edit Sales">
-    //           <ModeEditIcon
-    //             // onClick={() => getSelectedOrganizationForEdit(organization)}
-    //             color="primary"
-    //             style={{ cursor: "pointer" }}
-    //             sx={{ color: blue[500] }}
-    //           />
-    //         </Tooltip>
-    //         <Tooltip title="Delete Sales">
-    //           <DeleteIcon
-    //             // onClick={() => deleteOrganization(organization)}
-    //             style={{
-    //               marginLeft: 20,
-    //               cursor: "pointer",
-    //             }}
-    //             sx={{ color: red[400] }}
-    //           />
-    //         </Tooltip>
-    //       </>
-    //     );
-    //   },
-    // },
+    {
+      title: "Operation",
+      dataIndex: "operation",
+      width: "10%",
+      render: (_, purchase) => {
+        return (
+          <>
+            <Tooltip title="Edit Purchase">
+              <ModeEditIcon
+                // onClick={() => getSelectedOrganizationForEdit(purchase)}
+                color="primary"
+                style={{ cursor: "pointer" }}
+                sx={{ color: blue[500] }}
+              />
+            </Tooltip>
+            <Tooltip title="Delete Purchase">
+              <DeleteIcon
+                onClick={() => deletePurchase(purchase)}
+                style={{
+                  marginLeft: 20,
+                  cursor: "pointer",
+                }}
+                sx={{ color: red[400] }}
+              />
+            </Tooltip>
+          </>
+        );
+      },
+    },
   ];
   return (
     <>

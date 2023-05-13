@@ -4,7 +4,7 @@ import GridPreview from "../../components/previewgrids/grid";
 import StockForm from "../../components/Forms/stockForm";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setProductsForOrganizationListAction,
+  setProductsListAction,
   setStockListAction,
 } from "../../store/reducers/organization-user.state";
 import OrganizationUserApi from "../../services/organization-user-api";
@@ -29,7 +29,7 @@ const Stock = () => {
       if (organizationId) {
         if (stocksListState === null) getStocksList();
         else setStocksList(stocksListState);
-        if (productsListState === null) getProductsForOrganization();
+        if (productsListState === null) getProductsForUser();
       }
 
       // else setProductsList(productsListState);
@@ -37,13 +37,9 @@ const Stock = () => {
     []
   );
 
-  const getProductsForOrganization = async () => {
-    const response = await OrganizationUserApi.getProductsForOrganization(
-      organizationId
-    );
-    dispatch(
-      setProductsForOrganizationListAction({ productsList: response.data })
-    );
+  const getProductsForUser = async () => {
+    const response = await OrganizationUserApi.getProducts(organizationId);
+    dispatch(setProductsListAction({ productsList: response.data }));
   };
 
   const getStocksList = async () => {
