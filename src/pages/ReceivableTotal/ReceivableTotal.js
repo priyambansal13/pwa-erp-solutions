@@ -71,7 +71,7 @@ const ReceivableTotal = () => {
               <ArrowBackRoundedIcon />
             </IconButton>
             <Typography variant="h5" className="mt-1">
-              Receivable
+              Dashboard
             </Typography>
           </Stack>
         </Grid>

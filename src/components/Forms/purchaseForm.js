@@ -197,10 +197,9 @@ const PurchaseForm = (props) => {
                         name="timestamp"
                         disabled={props?.viewType === "View"}
                         value={
-                          formState !== null
+                          formState.timestamp !== null
                             ? formatDateString(formState?.timestamp)
-                            : // formState.timestamp
-                              null
+                            : null
                         }
                         onChange={(newValue) => handleChangeDate(newValue)}
                       />
@@ -285,7 +284,7 @@ const PurchaseForm = (props) => {
                       className={"mr-4 mt-0 pt-0"}
                       renderItem={(item) =>
                         item.quantity !== 0 && (
-                          <List.Item key={item.product.id}>
+                          <List.Item key={item?.product?.id}>
                             <List.Item.Meta
                               title={
                                 <b
@@ -294,7 +293,7 @@ const PurchaseForm = (props) => {
                                     fontWeight: 800,
                                   }}
                                 >
-                                  {item.product.name}
+                                  {item?.product?.name}
                                 </b>
                               }
                               description={
@@ -334,7 +333,7 @@ const PurchaseForm = (props) => {
                                         {item.quantity * item.price +
                                           (item.quantity *
                                             item.price *
-                                            item.product.taxPercent) /
+                                            item?.product?.taxPercent) /
                                             100}
                                       </b>
                                     </p>
@@ -349,10 +348,10 @@ const PurchaseForm = (props) => {
                                       <span style={{ marginRight: "40px" }}>
                                         Tax
                                       </span>
-                                      {item.product.taxPercent}% ={" "}
+                                      {item?.product?.taxPercent}% ={" "}
                                       {(item.quantity *
                                         item.price *
-                                        item.product.taxPercent) /
+                                        item?.product?.taxPercent) /
                                         100}
                                       <Badge
                                         count={"Edit"}
@@ -394,14 +393,16 @@ const PurchaseForm = (props) => {
                 <Stack spacing={1} alignItems="flex-end" className="mr-4 mb-2">
                   <Typography variant="h6" component="h4">
                     <span>SubTotal : </span>
-                    Rs {formState?.totalAmount - formState?.tax}
+                    Rs{" "}
+                    {formState?.totalAmount?.toFixed(2) -
+                      formState?.tax?.toFixed(2)}
                   </Typography>
                   <Typography variant="h6">
-                    <span>Tax :</span> Rs {formState?.tax}
+                    <span>Tax :</span> Rs {formState?.tax?.toFixed(2)}
                   </Typography>
                   <Typography variant="h5">
                     <span>Total Amount : </span>
-                    Rs {formState?.totalAmount}
+                    Rs {formState?.totalAmount?.toFixed(2)}
                   </Typography>
                 </Stack>
               </Grid>

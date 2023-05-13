@@ -17,10 +17,12 @@ import {
   getFormatedPurchasePayload,
   getFormattedPurchaseList,
 } from "../../utils/user-utils";
-import { Tooltip } from "@mui/material";
+import { Grid, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/Edit";
 import { red, blue } from "@mui/material/colors";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import { useNavigate } from "react-router-dom";
 
 const Purchase = () => {
   const dispatch = useDispatch();
@@ -39,6 +41,12 @@ const Purchase = () => {
   const [viewType, setViewType] = useState(false);
   const [purchaseList, setPurchaseList] = useState(null);
   // const [selectedOrganization, setSelectedOrganization] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
   useEffect(
     () => {
@@ -189,24 +197,42 @@ const Purchase = () => {
   ];
   return (
     <>
-      <GridPreview
-        showButton={true}
-        onAddButtonClick={onAddButtonClick}
-        buttonTitle={"Add Purchase"}
-        gridData={purchaseList || []}
-        columnsList={columns}
-      />
-      {/* <ListView buttonTitle={"Purchases"} /> */}
-      <BigModalDialog
-        modalTitle={"Add Purchase"}
-        showModal={showModal}
-        closeModal={closeModal}
-        submitData={addPurchase}
-        modalBody={PurchaseForm}
-        selectedDataForView={selectedSale}
-        viewType={viewType}
-        width={500}
-      />
+      <Grid container rowSpacing={4.5} columnSpacing={2.75}>
+        <Grid item xs={12} sx={{ mb: -2.25 }}>
+          <Stack direction={"row"}>
+            <IconButton
+              aria-label="arrowBack"
+              onClick={handleGoBack}
+              className="mr-2"
+            >
+              <ArrowBackRoundedIcon />
+            </IconButton>
+            <Typography variant="h5" className="mt-1">
+              Dashboard
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <GridPreview
+            showButton={true}
+            onAddButtonClick={onAddButtonClick}
+            buttonTitle={"Add Purchase"}
+            gridData={purchaseList || []}
+            columnsList={columns}
+          />
+        </Grid>
+        {/* <ListView buttonTitle={"Purchases"} /> */}
+        <BigModalDialog
+          modalTitle={"Purchase List"}
+          showModal={showModal}
+          closeModal={closeModal}
+          submitData={addPurchase}
+          modalBody={PurchaseForm}
+          selectedDataForView={selectedSale}
+          viewType={viewType}
+          width={500}
+        />
+      </Grid>
     </>
   );
 };

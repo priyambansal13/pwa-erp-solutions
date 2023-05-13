@@ -255,8 +255,8 @@ const UsersDashboard = () => {
     console.log("clicked", field);
     if (field === "Payable") navigate("/dashboard/payableTotal");
     if (field === "Receivable") navigate("/dashboard/receivableTotal");
-    if (field === "Sales") navigate("/sales");
-    if (field === "Purchase") navigate("/purchase");
+    if (field === "Sales") navigate("/dashboard/salesTotal");
+    if (field === "Purchase") navigate("/dashboard/purchaseTotal");
   };
   return (
     <>

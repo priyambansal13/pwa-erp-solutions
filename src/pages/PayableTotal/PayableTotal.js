@@ -71,7 +71,7 @@ const PayableTotal = () => {
               <ArrowBackRoundedIcon />
             </IconButton>
             <Typography variant="h5" className="mt-1">
-              Payable
+              Dashboard
             </Typography>
           </Stack>
         </Grid>

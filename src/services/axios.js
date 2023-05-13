@@ -13,8 +13,8 @@ async function refreshAccessToken() {
       token: refreshToken,
     });
 
-    const accessToken = response.data.access_token;
-
+    const accessToken = response.data.accessToken;
+    console.log("accessToken", accessToken);
     localStorage.setItem("accessToken", accessToken);
 
     return accessToken;

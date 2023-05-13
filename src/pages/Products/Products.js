@@ -6,7 +6,8 @@ import AdminUserApi from "../../services/admin-user-api";
 import { Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import { blue, red } from "@mui/material/colors";
+import AddIcon from "@mui/icons-material/Add";
+import { blue, green, red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { ADMIN } from "../../constants/constants";
 import OrganizationUserApi from "../../services/organization-user-api";
@@ -14,12 +15,15 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { setProductsListAction } from "../../store/reducers/organization-user.state";
 import { setOrganizationProductListAction } from "../../store/reducers/admin-user.state";
+import StockForm from "../../components/Forms/stockForm";
 
 const Products = () => {
   const dispatch = useDispatch();
   const userRole = localStorage.getItem("userRole");
   const userId = localStorage.getItem("userId");
   const [showModal, setShowModal] = useState(false);
+
+  const [showStockModal, setShowStockModal] = useState(false);
   const [productsList, setProductList] = useState(null);
   const productsListState = useSelector((state) =>
     userRole === ADMIN
@@ -36,6 +40,7 @@ const Products = () => {
   );
   const closeModal = () => {
     setShowModal(false);
+    setShowStockModal(false);
   };
   const addProductForOrganization = async (productPayload) => {
     console.log(productPayload);
@@ -126,6 +131,11 @@ const Products = () => {
     setShowModal(true);
   };
 
+  const addStockToProduct = (product) => {
+    console.log(product);
+    setShowStockModal(true);
+  };
+
   const columns = [
     {
       title: "Product Name",
@@ -167,15 +177,25 @@ const Products = () => {
       render: (_, product) => {
         return (
           <>
-            <Tooltip title="Edit Organization">
+            {userRole !== ADMIN && (
+              <Tooltip title="Add Stock">
+                <AddIcon
+                  onClick={() => addStockToProduct(product)}
+                  color="primary"
+                  style={{ cursor: "pointer" }}
+                  sx={{ color: green[500] }}
+                />
+              </Tooltip>
+            )}
+            <Tooltip title="Edit Product">
               <ModeEditIcon
                 // onClick={() => getSelectedOrganizationForEdit(organization)}
                 color="primary"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", marginLeft: 20 }}
                 sx={{ color: blue[500] }}
               />
             </Tooltip>
-            <Tooltip title="Delete Organization">
+            <Tooltip title="Delete Product">
               <DeleteIcon
                 onClick={() => deleteProduct(product)}
                 style={{
@@ -212,6 +232,17 @@ const Products = () => {
         width={400}
         modalBody={ProductForm}
         handleFileSelect={importProducts}
+      />
+      <BigModalDialog
+        modalTitle={"Add Stock"}
+        showModal={showStockModal}
+        closeModal={closeModal}
+        submitData={
+          userRole === ADMIN ? addProductForOrganization : addProductForUser
+        }
+        width={400}
+        modalBody={StockForm}
+        // handleFileSelect={importProducts}
       />
     </>
   );
