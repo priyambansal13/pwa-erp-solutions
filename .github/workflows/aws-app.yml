@@ -13,22 +13,13 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - name: deploy-react-app-to-aws
-        # You may pin to the exact commit or the version.
-        # uses: aasmal97/deploy-react-app-to-aws@b8aaad8b23efd06c58a8c3cce2c78d56c5fe1782
-        uses: aasmal97/deploy-react-app-to-aws@v1.3.0
+      - name: Upload to S3
+        uses: jakejarvis/s3-sync-action@master
         with:
-          # 
-          aws_region: ap-south-1
-          # 
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          # 
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          # 
-          bucket_name: newpamss3
-
-      - run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTIBUTION_ID }} --paths "/latest/index.html"
+          args: --acl public-read --delete
         env:
+          AWS_S3_BUCKET: newpamss3
+          AWS_REGION: ap-south-1
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ap-northeast-1    
+          SOURCE_DIR: build/    
