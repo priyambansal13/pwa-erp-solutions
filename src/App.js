@@ -9,6 +9,7 @@ import ThemeCustomization from "./themes";
 import Routes from "./Routes/index";
 
 function App() {
+  console.log("App");
   return (
     <>
       <ThemeCustomization>
