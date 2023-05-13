@@ -12,8 +12,14 @@ import {
 import { Button, Space } from "antd";
 import isEmpty from "lodash/isEmpty";
 import { useSelector } from "react-redux";
+// import { checkNullValues } from "../../utils/common-utils";
 
 const PurchaseProductItemForm = (props) => {
+  const DEFAULT_PURCHASE_ITEM_STATE = {
+    product: null,
+    quantity: null,
+    price: null,
+  };
   // let selectedItem = props.selectedDataForEdit;
   const [formPayload, setFormPayload] = useState(props.selectedDataForEdit);
 
@@ -21,12 +27,18 @@ const PurchaseProductItemForm = (props) => {
     (state) => state?.organizationUserState?.productsList
   );
 
-  useEffect(() => {
-    console.log("selectedDataForEdit", props.selectedDataForEdit);
-    // if (!props.selectedDataForEdit) {
-    setFormPayload(props.selectedDataForEdit);
-    // }
-  }, [props]);
+  useEffect(
+    () => {
+      console.log("selectedDataForEdit", props.selectedDataForEdit);
+      console.log("selectedDataForEdit", DEFAULT_PURCHASE_ITEM_STATE);
+
+      // if (!props.selectedDataForEdit) {
+      setFormPayload(props.selectedDataForEdit);
+      // }
+    },
+    // eslint-disable-next-line
+    [props]
+  );
 
   const handleChange = (e) => {
     if (e.target.name === "product") {
@@ -109,6 +121,24 @@ const PurchaseProductItemForm = (props) => {
 
   const resetFormState = () => {
     setFormPayload(null);
+  };
+
+  const onAddClick = () => {
+    // const itemPayload = {};
+    // itemPayload.product = {
+    //   id: formPayload.product.id,
+    //   name: formPayload.product.name,
+    //   unit: formPayload.product.unit,
+    //   taxPercent: formPayload.product.taxPercent,
+    // };
+    // itemPayload.quantity = formPayload.quantity;
+    // itemPayload.price = formPayload.price;
+    // itemPayload.itemAmount = formPayload.itemAmount;
+    // itemPayload.itemTotalAmount = formPayload.itemTotalAmount;
+    // itemPayload.taxAmount = formPayload.taxAmount;
+
+    props.submitData(formPayload);
+    resetFormState();
   };
 
   return (
@@ -244,11 +274,11 @@ const PurchaseProductItemForm = (props) => {
                 {isEmpty(props.selectedDataForEdit) ? (
                   <Button
                     onClick={() => {
-                      props.submitData(formPayload);
-                      resetFormState();
+                      onAddClick();
                     }}
                     ghost
                     type="primary"
+                    // disabled={checkNullValues(formPayload, ["status"])}
                   >
                     Add
                   </Button>

@@ -1,3 +1,5 @@
-const baseUrl = "https://api.phineco.in/api";
+const baseUrl = "https://api.phineco.in:8443/api";
 
-export { baseUrl };
+const ADMIN = "Admin";
+
+export { baseUrl, ADMIN };

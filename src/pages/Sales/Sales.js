@@ -16,6 +16,10 @@ import {
   getFormattedSalesList,
 } from "../../utils/user-utils";
 import AlertMessage from "../../components/shared/Modal-Dialog/Alert";
+import { Tooltip } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { red, blue } from "@mui/material/colors";
+import ModeEditIcon from "@mui/icons-material/Edit";
 
 const Sales = () => {
   const dispatch = useDispatch();
@@ -73,6 +77,7 @@ const Sales = () => {
 
     dispatch(setStockListAction({ stocksList: stockData }));
   };
+
   const getSalesList = async () => {
     const response = await OrganizationUserApi.getSales();
     const formattedSalesList = getFormattedSalesList(response.data);
@@ -102,6 +107,14 @@ const Sales = () => {
     closeModal();
   };
 
+  const deleteSale = async (sale) => {
+    const response = await OrganizationUserApi.deleteSale(sale);
+    if (response.status === 200) {
+      closeModal();
+      getSalesList();
+      getStockList();
+    }
+  };
   const openViewDetailModal = (item) => {
     setSelectedSale(item);
     setViewType("View");
@@ -127,7 +140,7 @@ const Sales = () => {
     },
     {
       title: "Customer Name",
-      dataIndex: "name",
+      dataIndex: "customerName",
       width: "10%",
       editable: true,
     },
@@ -154,35 +167,35 @@ const Sales = () => {
       //responsive: ["md"],
     },
 
-    // {
-    //   title: "Operation",
-    //   dataIndex: "operation",
-    //   width: "10%",
-    //   render: (_, organization) => {
-    //     return (
-    //       <>
-    //         <Tooltip title="Edit Sales">
-    //           <ModeEditIcon
-    //             // onClick={() => getSelectedOrganizationForEdit(organization)}
-    //             color="primary"
-    //             style={{ cursor: "pointer" }}
-    //             sx={{ color: blue[500] }}
-    //           />
-    //         </Tooltip>
-    //         <Tooltip title="Delete Sales">
-    //           <DeleteIcon
-    //             // onClick={() => deleteOrganization(organization)}
-    //             style={{
-    //               marginLeft: 20,
-    //               cursor: "pointer",
-    //             }}
-    //             sx={{ color: red[400] }}
-    //           />
-    //         </Tooltip>
-    //       </>
-    //     );
-    //   },
-    // },
+    {
+      title: "Operation",
+      dataIndex: "operation",
+      width: "10%",
+      render: (_, sale) => {
+        return (
+          <>
+            <Tooltip title="Edit Sales">
+              <ModeEditIcon
+                // onClick={() => getSelectedOrganizationForEdit(sale)}
+                color="primary"
+                style={{ cursor: "pointer" }}
+                sx={{ color: blue[500] }}
+              />
+            </Tooltip>
+            <Tooltip title="Delete Sales">
+              <DeleteIcon
+                onClick={() => deleteSale(sale)}
+                style={{
+                  marginLeft: 20,
+                  cursor: "pointer",
+                }}
+                sx={{ color: red[400] }}
+              />
+            </Tooltip>
+          </>
+        );
+      },
+    },
   ];
   return (
     <>

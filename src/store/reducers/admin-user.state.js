@@ -20,7 +20,7 @@ const adminState = createSlice({
     setOrganizationListAction(state, action) {
       state.organizationList = action.payload.organizationList;
     },
-    setProductListAction(state, action) {
+    setOrganizationProductListAction(state, action) {
       state.productsList = action.payload.productsList;
     },
   },
@@ -31,5 +31,5 @@ export default adminState.reducer;
 export const {
   setRolesListAction,
   setOrganizationListAction,
-  setProductListAction,
+  setOrganizationProductListAction,
 } = adminState.actions;

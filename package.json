@@ -1,7 +1,7 @@
 {
   "name": "my-app-pwa",
   "version": "0.1.0",
-  "homepage": "https://www.phineco.in",
+  "homepage": "https://priyambansal13.github.io/pwa-erp-solutions",
   "private": true,
   "dependencies": {
     "@ant-design/colors": "^6.0.0",
@@ -36,6 +36,7 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.2",
     "redux": "^4.2.1",
     "simplebar": "^5.3.8",
     "simplebar-react": "^2.4.1",

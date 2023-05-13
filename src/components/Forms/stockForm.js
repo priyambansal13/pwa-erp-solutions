@@ -23,7 +23,7 @@ const StockForm = (props) => {
       );
       setFormState({
         ...formState,
-        product: selectedProduct,
+        productId: selectedProduct.id,
       });
     } else
       setFormState({ ...formState, [e.target.name]: parseInt(e.target.value) });
@@ -69,7 +69,11 @@ const StockForm = (props) => {
                   label="Product"
                   name="product"
                   required
-                  value={formState !== null ? formState?.product?.id : ""}
+                  value={
+                    formState?.product?.id !== null
+                      ? formState?.product?.id
+                      : ""
+                  }
                 >
                   {getProductMenuItem()}
                 </TextField>

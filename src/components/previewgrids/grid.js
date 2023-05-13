@@ -142,6 +142,7 @@ const GridPreview = ({
                   <span style={{ color: "#1677ff", fontSize: "20px" }}>
                     <strong>{buttonTitle}</strong>
                   </span>
+
                   <Button
                     type="primary"
                     icon={<Add />}
@@ -151,7 +152,9 @@ const GridPreview = ({
                   />
                 </>
               ) : (
-                "Users"
+                <span style={{ color: "#1677ff", fontSize: "20px" }}>
+                  <strong>{buttonTitle}</strong>
+                </span>
               )}
             </>
           );

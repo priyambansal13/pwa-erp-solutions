@@ -22,6 +22,7 @@ const BigModalDialog = (props) => {
             viewType={props.viewType || null}
             selectedDataForView={props.selectedDataForView || null}
             modalData={props.modalData}
+            handleFileSelect={props.handleFileSelect}
           />
         }
       </Modal>
