@@ -4,7 +4,7 @@ import api from "../../services/common-api";
 import AdminUserApi from "../../services/admin-user-api";
 import {
   setOrganizationListAction,
-  setProductListAction,
+  setOrganizationProductListAction,
   setRolesListAction,
 } from "../../store/reducers/admin-user.state";
 import { setUserDetails } from "../../store/reducers/authentication";
@@ -35,7 +35,7 @@ const AdminDashboard = (props) => {
   const getProductsList = async () => {
     const response = await AdminUserApi.getProducts();
 
-    dispatch(setProductListAction({ productsList: response.data }));
+    dispatch(setOrganizationProductListAction({ productsList: response.data }));
   };
 
   const getUserDetails = async (userId) => {

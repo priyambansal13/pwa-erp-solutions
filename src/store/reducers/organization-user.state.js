@@ -9,6 +9,13 @@ const initialState = {
   suppliersList: null,
   purchaseList: null,
   stockList: null,
+  payableList: null,
+  receivableList: null,
+  bankList: null,
+  userAccountList: null,
+  paymentList: null,
+  receiptList: null,
+  expenseCategoryList: null,
 };
 
 // ==============================|| SLICE - MENU ||============================== //
@@ -17,7 +24,7 @@ const organizationUserState = createSlice({
   name: "organizationUserState",
   initialState,
   reducers: {
-    setProductsForOrganizationListAction(state, action) {
+    setProductsListAction(state, action) {
       state.productsList = action.payload.productsList;
     },
     setCustomersListAction(state, action) {
@@ -35,16 +42,44 @@ const organizationUserState = createSlice({
     setStockListAction(state, action) {
       state.stockList = action.payload.stocksList;
     },
+    setPayableListAction(state, action) {
+      state.payableList = action.payload.payableList;
+    },
+    setReceivableListAction(state, action) {
+      state.receivableList = action.payload.receivableList;
+    },
+    setBanksListAction(state, action) {
+      state.bankList = action.payload.bankList;
+    },
+    setUserAccountListAction(state, action) {
+      state.userAccountList = action.payload.userAccountList;
+    },
+    setPaymentListAction(state, action) {
+      state.paymentList = action.payload.paymentList;
+    },
+    setReceiptListAction(state, action) {
+      state.receiptList = action.payload.receiptList;
+    },
+    setExpenseCategoryListAction(state, action) {
+      state.expenseCategoryList = action.payload.expenseCategoryList;
+    },
   },
 });
 
 export default organizationUserState.reducer;
 
 export const {
-  setProductsForOrganizationListAction,
+  setProductsListAction,
   setCustomersListAction,
   setSuppliersListAction,
   setSalesListAction,
   setPurchaseListAction,
   setStockListAction,
+  setBanksListAction,
+  setPayableListAction,
+  setReceivableListAction,
+  setUserAccountListAction,
+  setPaymentListAction,
+  setReceiptListAction,
+  setExpenseCategoryListAction,
 } = organizationUserState.actions;

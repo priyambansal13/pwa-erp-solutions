@@ -6,13 +6,14 @@ import NavGroup from "./NavGroup";
 import OrganizationUtilities from "../../../../../menu-items/organization-utilities";
 import AdminUtilities from "../../../../../menu-items/admin-utilities";
 import dashboard from "../../../../../menu-items/dashboard";
+import { ADMIN } from "../../../../../constants/constants";
 
 // ==============================|| DRAWER CONTENT - NAVIGATION ||============================== //
 
 const Navigation = () => {
   const userRole = localStorage.getItem("userRole");
   const utilityGroup =
-    userRole === "ADMIN" ? AdminUtilities : OrganizationUtilities;
+    userRole === ADMIN ? AdminUtilities : OrganizationUtilities;
   const menuItem = { items: [dashboard, utilityGroup] };
   const navGroups = menuItem.items.map((item) => {
     switch (item.type) {

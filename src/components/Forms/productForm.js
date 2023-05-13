@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Grid,
   Stack,
@@ -10,8 +10,19 @@ import {
 import { Button, Space } from "antd";
 import isEmpty from "lodash/isEmpty";
 import { useSelector } from "react-redux";
+import { ADMIN } from "../../constants/constants";
+import OrDivider from "../shared/Or.component";
 
 const ProductForm = (props) => {
+  const DEFAULT_PRODUCT_STATE = {
+    name: null,
+    taxPercent: 0,
+    unit: null,
+    hsnCode: null,
+    description: null,
+    ownerId: null,
+  };
+  const userRole = localStorage.getItem("userRole");
   const [formState, setFormState] = useState(null);
   const organizationListState = useSelector(
     (state) => state?.adminState?.organizationList
@@ -21,7 +32,7 @@ const ProductForm = (props) => {
       let selectedOrganization = organizationListState.find(
         (organization) => organization.id === e.target.value
       );
-      setFormState({ ...formState, organization: selectedOrganization });
+      setFormState({ ...formState, ownerId: selectedOrganization.id });
     } else setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
@@ -43,20 +54,48 @@ const ProductForm = (props) => {
     );
   };
 
+  const fileInputRef = useRef();
+
+  const handleReset = () => {
+    fileInputRef.current.value = "";
+  };
+
   useEffect(() => {
     console.log(formState);
   }, [formState]);
 
   const resetFormState = () => {
-    setFormState(null);
+    setFormState(DEFAULT_PRODUCT_STATE);
+    handleReset();
+  };
+
+  const uploadProductFile = (e) => {
+    props.handleFileSelect(e);
+    handleReset();
   };
   return (
     <>
       <form style={{ marginTop: "30px", marginBottom: "20px" }}>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} className="mb-2">
+          <Grid item xs={12}>
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                type="file"
+                inputRef={fileInputRef}
+                onChange={uploadProductFile}
+                InputLabelProps={{ shrink: true }}
+                label="Import Products"
+                variant="outlined"
+                margin="normal"
+              />
+            </FormControl>
+          </Grid>
+        </Grid>
+        <OrDivider />
+        <Grid container spacing={3} className="mt-1">
           <Grid item xs={12}>
             <Stack spacing={1} direction="row">
-              <FormControl sx={{ width: "50%" }}>
+              <FormControl sx={{ width: userRole === ADMIN ? "50%" : "100%" }}>
                 <TextField
                   required
                   id="outlined-required"
@@ -67,11 +106,48 @@ const ProductForm = (props) => {
                   InputLabelProps={{ shrink: true }}
                   error={false}
                   name="name"
-                  value={formState !== null ? formState.name : ""}
+                  value={formState?.name !== null ? formState?.name : ""}
                   onChange={handleChange}
                 />
               </FormControl>
-              <FormControl sx={{ m: 1, width: "50%" }}>
+              {userRole === ADMIN && (
+                <FormControl sx={{ width: "50%" }}>
+                  <TextField
+                    id="outlined-required"
+                    onChange={handleChange}
+                    InputLabelProps={{ shrink: true }}
+                    select
+                    label="Organization"
+                    name="organization"
+                    required
+                    value={
+                      formState?.ownerId !== null ? formState?.ownerId : ""
+                    }
+                  >
+                    {getOrganizationMenuItem()}
+                  </TextField>
+                </FormControl>
+              )}
+            </Stack>
+          </Grid>
+          <Grid item xs={12}>
+            <Stack spacing={1} direction="row">
+              <FormControl sx={{ width: "50%" }}>
+                <TextField
+                  required
+                  id="outlined-required"
+                  label="HSN Code"
+                  InputProps={{
+                    readOnly: false,
+                  }}
+                  InputLabelProps={{ shrink: true }}
+                  error={false}
+                  name="hsnCode"
+                  value={formState?.hsnCode !== null ? formState?.hsnCode : ""}
+                  onChange={handleChange}
+                />
+              </FormControl>
+              <FormControl sx={{ m: 1, width: "25%" }}>
                 <TextField
                   id="outlined-required"
                   onChange={handleChange}
@@ -80,44 +156,26 @@ const ProductForm = (props) => {
                   label="Unit"
                   name="unit"
                   required
-                  value={formState !== null ? formState.unit : ""}
+                  value={formState?.unit !== null ? formState?.unit : ""}
                 >
                   <MenuItem key={1} value="">
                     <em>None</em>
                   </MenuItem>
                   <MenuItem key={2} value="kg">
-                    Kilogram
+                    Kg
                   </MenuItem>
                   <MenuItem key={3} value="l">
-                    Litre
+                    L
                   </MenuItem>
                   <MenuItem key={4} value="gm">
-                    Grams
+                    Gm
                   </MenuItem>
                   <MenuItem key={5} value="ml">
-                    Mililitre
+                    Ml
                   </MenuItem>
                 </TextField>
               </FormControl>
-            </Stack>
-          </Grid>
-          <Grid item xs={12}>
-            <Stack spacing={1} direction="row">
-              <FormControl sx={{ width: "70%" }}>
-                <TextField
-                  id="outlined-required"
-                  onChange={handleChange}
-                  InputLabelProps={{ shrink: true }}
-                  select
-                  label="Organization"
-                  name="organization"
-                  required
-                  value={formState !== null ? formState?.organization?.id : ""}
-                >
-                  {getOrganizationMenuItem()}
-                </TextField>
-              </FormControl>
-              <FormControl sx={{ width: "30%" }}>
+              <FormControl sx={{ width: "25%" }}>
                 <TextField
                   id="outlined-required"
                   onChange={handleChange}
@@ -126,7 +184,9 @@ const ProductForm = (props) => {
                   label="Tax"
                   name="taxPercent"
                   required
-                  value={formState !== null ? formState.taxPercent : ""}
+                  value={
+                    formState?.taxPercent !== null ? formState?.taxPercent : ""
+                  }
                 >
                   <MenuItem key={1} value={0}>
                     <em>0%</em>
@@ -158,7 +218,9 @@ const ProductForm = (props) => {
                 name="description"
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
-                value={formState !== null ? formState.description : ""}
+                value={
+                  formState?.description !== null ? formState?.description : ""
+                }
               />
             </Stack>
           </Grid>

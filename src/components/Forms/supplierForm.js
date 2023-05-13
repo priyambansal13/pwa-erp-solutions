@@ -3,10 +3,17 @@ import { Box, FormControl, Grid, Stack, TextField } from "@mui/material";
 import isEmpty from "lodash/isEmpty";
 import { Button, Space } from "antd";
 import { useSelector } from "react-redux";
+import { checkNullValues } from "../../utils/common-utils";
 
 const SupplierForm = (props) => {
+  const DEFAULT_SUPPLIER_STATE = {
+    name: null,
+    gstNumber: null,
+    address: null,
+    phoneNumber: null,
+  };
   const rolesListState = useSelector((state) => state.adminState.rolesList);
-  const [formState, setFormState] = useState(null);
+  const [formState, setFormState] = useState(DEFAULT_SUPPLIER_STATE);
 
   useEffect(
     () => {
@@ -42,7 +49,7 @@ const SupplierForm = (props) => {
   }, [props.selectedDataForEdit]);
 
   const resetFormState = () => {
-    setFormState(null);
+    setFormState(DEFAULT_SUPPLIER_STATE);
   };
   const handleChange = (e) => {
     if (e.target.name === "role") {
@@ -70,7 +77,7 @@ const SupplierForm = (props) => {
                   InputLabelProps={{ shrink: true }}
                   error={false}
                   onChange={handleChange}
-                  value={formState !== null ? formState.name : ""}
+                  value={formState.name !== null ? formState.name : ""}
                 />
               </FormControl>
             </Stack>
@@ -90,7 +97,9 @@ const SupplierForm = (props) => {
                   InputLabelProps={{ shrink: true }}
                   error={false}
                   onChange={handleChange}
-                  value={formState !== null ? formState.phoneNumber : ""}
+                  value={
+                    formState.phoneNumber !== null ? formState.phoneNumber : ""
+                  }
                 />
               </FormControl>
             </Stack>
@@ -109,7 +118,9 @@ const SupplierForm = (props) => {
                   InputLabelProps={{ shrink: true }}
                   error={false}
                   onChange={handleChange}
-                  value={formState !== null ? formState.gstNumber : ""}
+                  value={
+                    formState.gstNumber !== null ? formState.gstNumber : ""
+                  }
                 />
               </FormControl>
               {/* <FormControl sx={{ m: 1, width: "100%" }}>
@@ -138,7 +149,7 @@ const SupplierForm = (props) => {
                 name="address"
                 InputLabelProps={{ shrink: true }}
                 onChange={handleChange}
-                value={formState !== null ? formState.address : ""}
+                value={formState.address !== null ? formState.address : ""}
               />
             </Stack>
           </Grid>
@@ -160,6 +171,7 @@ const SupplierForm = (props) => {
                     onClick={() => props.submitData(formState)}
                     ghost
                     type="primary"
+                    disabled={checkNullValues(formState, [])}
                   >
                     Save
                   </Button>
