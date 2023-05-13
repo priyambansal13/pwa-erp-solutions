@@ -15,21 +15,17 @@ import {
   getFormatedSalePayload,
   getFormattedSalesList,
 } from "../../utils/user-utils";
-import AlertMessage from "../../components/shared/Modal-Dialog/Alert";
-import { Tooltip } from "@mui/material";
+import { Grid, IconButton, Stack, Tooltip, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { red, blue } from "@mui/material/colors";
 import ModeEditIcon from "@mui/icons-material/Edit";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import { useNavigate } from "react-router-dom";
 
 const Sales = () => {
   const dispatch = useDispatch();
   const organizationId = localStorage.getItem("organizationId");
-  // eslint-disable-next-line
-  const [openAlertState, setOpenAlertState] = useState({
-    openAlert: false,
-    message: "",
-    severity: "",
-  });
+
   const salesListState = useSelector(
     (state) => state?.organizationUserState?.salesList
   );
@@ -45,6 +41,11 @@ const Sales = () => {
   const [salesList, setSalesList] = useState(null);
   // const [selectedOrganization, setSelectedOrganization] = useState(null);
 
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
   useEffect(
     () => {
       console.log(salesList);
@@ -199,29 +200,42 @@ const Sales = () => {
   ];
   return (
     <>
-      <AlertMessage
-        openAlert={openAlertState.openAlert}
-        severity={openAlertState.severity}
-        message={openAlertState.message}
-      />
-      <GridPreview
-        showButton={true}
-        onAddButtonClick={onAddButtonClick}
-        buttonTitle={"Sales"}
-        gridData={salesList || []}
-        columnsList={columns}
-      />
-      {/* <ListView buttonTitle={"Sales"} data={salesList || []} /> */}
-      <BigModalDialog
-        modalTitle={"Add Sale"}
-        showModal={showModal}
-        closeModal={closeModal}
-        submitData={addSale}
-        modalBody={SalesForm}
-        selectedDataForView={selectedSale}
-        viewType={viewType}
-        width={500}
-      />
+      <Grid container rowSpacing={4.5} columnSpacing={2.75}>
+        <Grid item xs={12} sx={{ mb: -2.25 }}>
+          <Stack direction={"row"}>
+            <IconButton
+              aria-label="arrowBack"
+              onClick={handleGoBack}
+              className="mr-2"
+            >
+              <ArrowBackRoundedIcon />
+            </IconButton>
+            <Typography variant="h5" className="mt-1">
+              Dashboard
+            </Typography>
+          </Stack>
+        </Grid>
+        <Grid item xs={12}>
+          <GridPreview
+            showButton={true}
+            onAddButtonClick={onAddButtonClick}
+            buttonTitle={"Sales List"}
+            gridData={salesList || []}
+            columnsList={columns}
+          />
+        </Grid>
+        {/* <ListView buttonTitle={"Sales"} data={salesList || []} /> */}
+        <BigModalDialog
+          modalTitle={"Add Sale"}
+          showModal={showModal}
+          closeModal={closeModal}
+          submitData={addSale}
+          modalBody={SalesForm}
+          selectedDataForView={selectedSale}
+          viewType={viewType}
+          width={500}
+        />
+      </Grid>
     </>
   );
 };

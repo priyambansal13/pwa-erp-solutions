@@ -68,6 +68,14 @@ const OrganizationUserRoutes = (isLoggedIn) => [
         element: <ReceivableTotal />,
       },
       {
+        path: "/dashboard/salesTotal",
+        element: <Sales />,
+      },
+      {
+        path: "/dashboard/purchaseTotal",
+        element: <Purchase />,
+      },
+      {
         path: "addProducts",
         element: <Products />,
       },

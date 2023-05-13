@@ -31,7 +31,21 @@ export const getFormattedSalesList = (data) => {
     saleObject.customerId = sales.customer.id;
     saleObject.customerName = sales.customer.name;
     saleObject.itemsCount = sales.items.length;
-    saleObject.salePurchaseItems = sales.items;
+    saleObject.salePurchaseItems = [];
+    // eslint-disable-next-line
+    sales?.items?.map((item) => {
+      const itemObject = {};
+      itemObject.product = {
+        id: item.productId,
+        taxPercent: item.taxPercent,
+        unit: item.unit,
+        name: item.name,
+        hsnCode: item.hsnCode,
+      };
+      itemObject.price = item.price;
+      itemObject.quantity = item.quantity;
+      saleObject.salePurchaseItems.push(itemObject);
+    });
     saleObject.timestamp =
       sales.timestamp && convertToDateTime(sales.timestamp);
     salesData.push(saleObject);
@@ -50,7 +64,21 @@ export const getFormattedPurchaseList = (data) => {
     purchaseObject.name = purchase.supplier.name;
     purchaseObject.supplierId = purchase.supplier.id;
     purchaseObject.itemsCount = purchase.items.length;
-    purchaseObject.salePurchaseItems = purchase.items;
+    purchaseObject.salePurchaseItems = [];
+    // eslint-disable-next-line
+    purchase?.items?.map((item) => {
+      const itemObject = {};
+      itemObject.product = {
+        id: item.productId,
+        taxPercent: item.taxPercent,
+        unit: item.unit,
+        name: item.name,
+        hsnCode: item.hsnCode,
+      };
+      itemObject.price = item.price;
+      itemObject.quantity = item.quantity;
+      purchaseObject.salePurchaseItems.push(itemObject);
+    });
     purchaseObject.timestamp =
       purchase.timestamp && convertToDateTime(purchase.timestamp);
     purchaseData.push(purchaseObject);
