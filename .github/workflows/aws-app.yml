@@ -18,8 +18,8 @@ jobs:
         with:
           args: --acl public-read --delete --exclude '*.html' --exclude '*.txt' --exclude '*.json' --exclude '*.xml' . s3://newpamss3/latest/
         env:
-          AWS_S3_BUCKET: newpamss3
+          AWS_S3_BUCKET: ${{ AWS_S#_BUCKET_NAME }}
           AWS_REGION: ap-south-1
-          AWS_ACCESS_KEY_ID: AKIAWWZJXWWY6KHVRR46
-          AWS_SECRET_ACCESS_KEY: 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
+          AWS_ACCESS_KEY_ID: ${{ AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: build/    
