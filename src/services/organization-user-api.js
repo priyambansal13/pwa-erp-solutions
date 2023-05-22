@@ -93,7 +93,13 @@ const OrganizationUserApi = {
     return axiosInstance.get(`${baseUrl}/payments`);
   },
   getAllPaymentsForSupplier: (body) => {
-    return axiosInstance.get(`${baseUrl}/payments/supplier/${body.id}`);
+    if (body.from && body.to) {
+      return axiosInstance.get(
+        `${baseUrl}/payments/supplier/${body?.id}?from=${body.from}&to=${body.to}`
+      );
+    } else {
+      return axiosInstance.get(`${baseUrl}/payments/supplier/${body?.id}`);
+    }
   },
   getPaymentsPayable: () => {
     return axiosInstance.get(`${baseUrl}/payments/payable`);
@@ -116,7 +122,13 @@ const OrganizationUserApi = {
     return axiosInstance.get(`${baseUrl}/receipts`);
   },
   getAllReceiptsForCustomer: (body) => {
-    return axiosInstance.get(`${baseUrl}/receipts/customer/${body.id}`);
+    if (body.from && body.to) {
+      return axiosInstance.get(
+        `${baseUrl}/receipts/customer/${body?.id}?from=${body.from}&to=${body.to}`
+      );
+    } else {
+      return axiosInstance.get(`${baseUrl}/receipts/customer/${body?.id}`);
+    }
   },
   getReceiptsReceivable: () => {
     return axiosInstance.get(`${baseUrl}/receipts/receivable`);

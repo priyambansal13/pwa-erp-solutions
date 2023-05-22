@@ -99,6 +99,7 @@ const UserAccount = () => {
       title: "Operation",
       dataIndex: "operation",
       width: "10%",
+      editable: true,
       render: (_, account) => {
         return (
           <>

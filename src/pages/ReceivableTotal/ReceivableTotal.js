@@ -1,17 +1,41 @@
 import { Grid, IconButton, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GridPreview from "../../components/previewgrids/grid";
+import OrganizationUserApi from "../../services/organization-user-api";
+import { setReceivableListAction } from "../../store/reducers/organization-user.state";
 const ReceivableTotal = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const receivableListState = useSelector(
     (state) => state?.organizationUserState?.receivableList
   );
 
+  const [receivableList, setReceivableList] = useState(null);
+
+  useEffect(
+    () => {
+      console.log(receivableListState);
+      if (receivableListState === null) getReceivableList();
+      else setReceivableList(receivableListState);
+    }, // eslint-disable-next-line
+    []
+  );
+
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const openViewDetailPage = (customer) => {
+    navigate(`/dashboard/receivableTotal/${customer?.partyId}`);
+  };
+
+  const getReceivableList = async () => {
+    const response = await OrganizationUserApi.getReceiptsReceivable();
+    setReceivableList(response.data);
+    dispatch(setReceivableListAction({ receivableList: response.data }));
   };
 
   const columns = [
@@ -20,6 +44,16 @@ const ReceivableTotal = () => {
       dataIndex: "partyName",
       width: "20%",
       editable: true,
+      render: (_, customer) => (
+        <span
+          style={{ color: "#007bff" }}
+          onClick={() => {
+            openViewDetailPage(customer);
+          }}
+        >
+          <b>{customer.partyName}</b>
+        </span>
+      ),
     },
     {
       title: "Amount",
@@ -74,13 +108,14 @@ const ReceivableTotal = () => {
               Dashboard
             </Typography>
           </Stack>
+          
         </Grid>
         <Grid item xs={12}>
           <GridPreview
             buttonTitle={"Receivable List"}
             // onAddButtonClick={onAddButtonClick}
 
-            gridData={receivableListState || []}
+            gridData={receivableList || []}
             columnsList={columns}
             showButton={false}
           />

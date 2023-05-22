@@ -1,0 +1,8 @@
+.responsive-range-picker {
+  flex-direction: column;
+}
+@media (max-width: 720px) {
+  .responsive-range-picker .ant-picker-panels {
+    flex-direction: column;
+  }
+}
