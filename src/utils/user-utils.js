@@ -8,7 +8,7 @@ export const formatStockData = (data) => {
     const stockObject = {};
     stockObject.productId = stock.product.id;
     stockObject.stockId = stock.id;
-
+    stockObject.hsnCode = stock?.product?.hsnCode;
     stockObject.name = stock.product.name;
     stockObject.unit = stock.product.unit;
     stockObject.taxPercent = stock.product.taxPercent;

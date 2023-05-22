@@ -1,17 +1,40 @@
 import { Grid, IconButton, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GridPreview from "../../components/previewgrids/grid";
+import { setPayableListAction } from "../../store/reducers/organization-user.state";
+import OrganizationUserApi from "../../services/organization-user-api";
 const PayableTotal = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const payableListState = useSelector(
     (state) => state?.organizationUserState?.payableList
   );
+  const [payableList, setPayableList] = useState(null);
 
+  useEffect(
+    () => {
+      console.log(payableListState);
+      if (payableListState === null) getPayableList();
+      else setPayableList(payableListState);
+    }, // eslint-disable-next-line
+    []
+  );
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const openViewDetailPage = (supplier) => {
+    console.log("supplier", supplier);
+    navigate(`/dashboard/payableTotal/${supplier?.partyId}`);
+  };
+
+  const getPayableList = async () => {
+    const response = await OrganizationUserApi.getPaymentsPayable();
+    setPayableList(response.data);
+    dispatch(setPayableListAction({ payableList: response.data }));
   };
 
   const columns = [
@@ -20,6 +43,16 @@ const PayableTotal = () => {
       dataIndex: "partyName",
       width: "20%",
       editable: true,
+      render: (_, supplier) => (
+        <span
+          style={{ color: "#007bff" }}
+          onClick={() => {
+            openViewDetailPage(supplier);
+          }}
+        >
+          <b>{supplier.partyName}</b>
+        </span>
+      ),
     },
     {
       title: "Amount",
@@ -80,7 +113,7 @@ const PayableTotal = () => {
             buttonTitle={"Payable List"}
             // onAddButtonClick={onAddButtonClick}
 
-            gridData={payableListState || []}
+            gridData={payableList || []}
             columnsList={columns}
             showButton={false}
           />

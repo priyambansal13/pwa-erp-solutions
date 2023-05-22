@@ -14,8 +14,10 @@ import UserAccount from "../pages/Account/UserAccount";
 import Payment from "../pages/Payment/Payment";
 import Receipt from "../pages/Receipt/Receipt";
 import PayableTotal from "../pages/PayableTotal/PayableTotal";
+import SupplierPaymentDetails from "../pages/PayableTotal/SupplierPaymentDetails";
 import ReceivableTotal from "../pages/ReceivableTotal/ReceivableTotal";
 import Products from "../pages/Products/Products";
+import CustomerPaymentDetails from "../pages/ReceivableTotal/CustomerPaymentDetails";
 
 // render - dashboard
 //const DashboardDefault = Loadable(lazy(() => import("pages/dashboard")));
@@ -64,8 +66,16 @@ const OrganizationUserRoutes = (isLoggedIn) => [
         element: <PayableTotal />,
       },
       {
+        path: "/dashboard/payableTotal/:id",
+        element: <SupplierPaymentDetails />,
+      },
+      {
         path: "/dashboard/receivableTotal",
         element: <ReceivableTotal />,
+      },
+      {
+        path: "/dashboard/receivableTotal/:id",
+        element: <CustomerPaymentDetails />,
       },
       {
         path: "/dashboard/salesTotal",

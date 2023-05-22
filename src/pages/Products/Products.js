@@ -13,9 +13,10 @@ import { ADMIN } from "../../constants/constants";
 import OrganizationUserApi from "../../services/organization-user-api";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { setProductsListAction } from "../../store/reducers/organization-user.state";
+import { setStockListAction } from "../../store/reducers/organization-user.state";
 import { setOrganizationProductListAction } from "../../store/reducers/admin-user.state";
 import StockForm from "../../components/Forms/stockForm";
+import { formatStockData } from "../../utils/user-utils";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -112,9 +113,11 @@ const Products = () => {
         setOrganizationProductListAction({ productsList: response.data })
       );
     } else {
-      const response = await OrganizationUserApi.getProducts();
-      setProductList(response.data);
-      dispatch(setProductsListAction({ productsList: response.data }));
+      const response = await OrganizationUserApi.getStockList();
+      const stockData = formatStockData(response.data);
+      console.log(stockData);
+      setProductList(stockData);
+      dispatch(setStockListAction({ stocksList: stockData }));
     }
   };
 
@@ -150,12 +153,12 @@ const Products = () => {
       editable: true,
     },
 
-    // {
-    //   title: "Organization Name",
-    //   dataIndex: "",
-    //   width: "20%",
-    //   editable: true,
-    // },
+    {
+      title: "Stock Quantity",
+      dataIndex: "quantity",
+      width: "20%",
+      editable: true,
+    },
     {
       title: "Tax Percent(%)",
       dataIndex: "taxPercent",
