@@ -58,6 +58,7 @@ const ProductForm = (props) => {
 
   const handleReset = () => {
     fileInputRef.current.value = "";
+    setFormState(DEFAULT_PRODUCT_STATE);
   };
 
   useEffect(() => {
@@ -70,14 +71,30 @@ const ProductForm = (props) => {
   };
 
   const uploadProductFile = (e) => {
-    props.handleFileSelect(e);
-    handleReset();
+    if (formState?.ownerId) {
+      props.handleFileSelect(e, formState?.ownerId);
+      handleReset();
+    }
   };
   return (
     <>
       <form style={{ marginTop: "30px", marginBottom: "20px" }}>
         <Grid container spacing={3} className="mb-2">
           <Grid item xs={12}>
+            <FormControl sx={{ width: "100%" }}>
+              <TextField
+                id="outlined-required"
+                onChange={handleChange}
+                InputLabelProps={{ shrink: true }}
+                select
+                label="Organization"
+                name="organization"
+                required
+                value={formState?.ownerId !== null ? formState?.ownerId : ""}
+              >
+                {getOrganizationMenuItem()}
+              </TextField>
+            </FormControl>
             <FormControl sx={{ width: "100%" }}>
               <TextField
                 type="file"
@@ -95,7 +112,7 @@ const ProductForm = (props) => {
         <Grid container spacing={3} className="mt-1">
           <Grid item xs={12}>
             <Stack spacing={1} direction="row">
-              <FormControl sx={{ width: userRole === ADMIN ? "50%" : "100%" }}>
+              <FormControl sx={{ width: userRole === ADMIN ? "100%" : "100%" }}>
                 <TextField
                   required
                   id="outlined-required"
@@ -110,7 +127,7 @@ const ProductForm = (props) => {
                   onChange={handleChange}
                 />
               </FormControl>
-              {userRole === ADMIN && (
+              {/* {userRole === ADMIN && (
                 <FormControl sx={{ width: "50%" }}>
                   <TextField
                     id="outlined-required"
@@ -127,7 +144,7 @@ const ProductForm = (props) => {
                     {getOrganizationMenuItem()}
                   </TextField>
                 </FormControl>
-              )}
+              )} */}
             </Stack>
           </Grid>
           <Grid item xs={12}>

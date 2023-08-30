@@ -1,0 +1,38 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "peacock.affectPanelBorder": true,
+    "peacock.affectEditorGroupBorder": true,
+    "peacock.color": "green",
+    "peacock.affectStatusBar": true,
+    "peacock.affectSideBarBorder": true,
+    "peacock.affectTitleBar": false,
+    "peacock.keepBadgeColor": true,
+    "peacock.keepForegroundColor": true,
+    "peacock.showColorInStatusBar": true,
+    "peacock.affectDebuggingStatusBar": true,
+    "peacock.affectStatusAndTitleBorders": true,
+    "peacock.affectTabActiveBorder": true,
+    "peacock.darkenLightenPercentage": 5,
+    "peacock.darkForegroundColor": "#15202b",
+    "workbench.colorCustomizations": {
+      "activityBar.activeBackground": "#00b300",
+      "activityBar.background": "#00b300",
+      "editorGroup.border": "#224f22",
+      "panel.border": "#00b300",
+      "sash.hoverBorder": "#00b300",
+      "sideBar.border": "#00b300",
+      "tab.activeBorder": "#00b300",
+      "statusBar.background": "#008000",
+      "statusBar.border": "#008000",
+      "statusBar.debuggingBackground": "#800080",
+      "statusBar.debuggingBorder": "#800080",
+      "statusBarItem.hoverBackground": "#00b300",
+      "statusBarItem.remoteBackground": "#008000"
+    }
+  }
+}

@@ -6,8 +6,8 @@ import AdminUserApi from "../../services/admin-user-api";
 import { Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import AddIcon from "@mui/icons-material/Add";
-import { blue, green, red } from "@mui/material/colors";
+// import AddIcon from "@mui/icons-material/Add";
+import { blue, red } from "@mui/material/colors";
 import { useDispatch, useSelector } from "react-redux";
 import { ADMIN } from "../../constants/constants";
 import OrganizationUserApi from "../../services/organization-user-api";
@@ -17,6 +17,7 @@ import { setStockListAction } from "../../store/reducers/organization-user.state
 import { setOrganizationProductListAction } from "../../store/reducers/admin-user.state";
 import StockForm from "../../components/Forms/stockForm";
 import { formatStockData } from "../../utils/user-utils";
+import { formatOrganizationProductData } from "../../utils/admin-utils";
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ const Products = () => {
   const productsListState = useSelector((state) =>
     userRole === ADMIN
       ? state?.adminState?.productsList
-      : state?.organizationUserState?.productsList
+      : state?.organizationUserState?.stockList
   );
 
   useEffect(
@@ -52,25 +53,33 @@ const Products = () => {
       getProductsList();
     }
   };
-  const addProductForUser = async (productPayload) => {
-    console.log(productPayload);
-    if (userRole !== ADMIN) productPayload.ownerId = userId;
-    productPayload.userOwned = true;
-    const response = await AdminUserApi.addProductUser(productPayload);
-    if (response.status === 200) {
+
+  const addProductForUser = async (productPayload, selectedProductType) => {
+    console.log(productPayload, selectedProductType);
+    let response = null;
+    if (selectedProductType === "new") {
+      if (userRole !== ADMIN) productPayload.ownerId = userId;
+      productPayload.userOwned = true;
+      response = await OrganizationUserApi.addProductUser(productPayload);
+    } else {
+      response = await OrganizationUserApi.addStockForProduct(productPayload);
+    }
+    if (response?.status === 200) {
       closeModal();
       getProductsList();
     }
   };
 
-  const importProducts = async (e) => {
+  const importProducts = async (e, organizationId) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("file", file);
     try {
-      const response = await OrganizationUserApi.importProductsUserSpecific(
-        formData
-      );
+      const response =
+        await OrganizationUserApi.importProductsOrganizationSpecific(
+          formData,
+          organizationId
+        );
       console.log(response);
       if (response.status === 206) {
         console.log(response);
@@ -101,16 +110,17 @@ const Products = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.success("All Products Imported Successfully!");
+      toast.error("Products not imported! Please try again");
       closeModal();
     }
   };
   const getProductsList = async () => {
     if (userRole === ADMIN) {
       const response = await AdminUserApi.getProducts();
-      setProductList(response.data);
+      const formattedData = formatOrganizationProductData(response.data);
+      setProductList(formattedData);
       dispatch(
-        setOrganizationProductListAction({ productsList: response.data })
+        setOrganizationProductListAction({ productsList: formattedData })
       );
     } else {
       const response = await OrganizationUserApi.getStockList();
@@ -134,11 +144,6 @@ const Products = () => {
     setShowModal(true);
   };
 
-  const addStockToProduct = (product) => {
-    console.log(product);
-    setShowStockModal(true);
-  };
-
   const columns = [
     {
       title: "Product Name",
@@ -156,7 +161,7 @@ const Products = () => {
     {
       title: "Stock Quantity",
       dataIndex: "quantity",
-      width: "20%",
+      width: "10%",
       editable: true,
     },
     {
@@ -169,7 +174,7 @@ const Products = () => {
     {
       title: "Unit",
       dataIndex: "unit",
-      width: "10%",
+      width: "5%",
       editable: true,
     },
 
@@ -180,16 +185,6 @@ const Products = () => {
       render: (_, product) => {
         return (
           <>
-            {userRole !== ADMIN && (
-              <Tooltip title="Add Stock">
-                <AddIcon
-                  onClick={() => addStockToProduct(product)}
-                  color="primary"
-                  style={{ cursor: "pointer" }}
-                  sx={{ color: green[500] }}
-                />
-              </Tooltip>
-            )}
             <Tooltip title="Edit Product">
               <ModeEditIcon
                 // onClick={() => getSelectedOrganizationForEdit(organization)}
@@ -233,7 +228,7 @@ const Products = () => {
           userRole === ADMIN ? addProductForOrganization : addProductForUser
         }
         width={400}
-        modalBody={ProductForm}
+        modalBody={userRole === ADMIN ? ProductForm : StockForm}
         handleFileSelect={importProducts}
       />
       <BigModalDialog

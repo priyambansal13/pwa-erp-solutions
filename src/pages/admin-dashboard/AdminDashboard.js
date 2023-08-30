@@ -9,6 +9,7 @@ import {
 } from "../../store/reducers/admin-user.state";
 import { setUserDetails } from "../../store/reducers/authentication";
 import "./adminDashboard.scss";
+import { formatOrganizationProductData } from "../../utils/admin-utils";
 
 const AdminDashboard = (props) => {
   const dispatch = useDispatch();
@@ -34,8 +35,8 @@ const AdminDashboard = (props) => {
   };
   const getProductsList = async () => {
     const response = await AdminUserApi.getProducts();
-
-    dispatch(setOrganizationProductListAction({ productsList: response.data }));
+    const formattedData = formatOrganizationProductData(response.data);
+    dispatch(setOrganizationProductListAction({ productsList: formattedData }));
   };
 
   const getUserDetails = async (userId) => {

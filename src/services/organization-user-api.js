@@ -184,15 +184,18 @@ const OrganizationUserApi = {
       }
     );
   },
-  importProductsOrganizationSpecific: (body) => {
-    return axiosInstance.put(
-      `${baseUrl}/upload/products?orgId=${userId}`,
-      body
+  importProductsOrganizationSpecific: (formData, organizationId) => {
+    return axiosInstance.post(
+      `${baseUrl}/upload/products?orgId=${organizationId}`,
+      formData
     );
   },
 
   getProducts: () => {
     return axiosInstance.get(`${baseUrl}/products/user`);
+  },
+  addProductUser: (body) => {
+    return axiosInstance.post(`${baseUrl}/products/user/product`, body);
   },
 };
 

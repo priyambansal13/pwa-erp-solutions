@@ -28,9 +28,6 @@ const AdminUserApi = {
   addProductOrganization: (body) => {
     return axiosInstance.post(`${baseUrl}/products/org/product`, body);
   },
-  addProductUser: (body) => {
-    return axiosInstance.post(`${baseUrl}/products/user/product`, body);
-  },
 
   getProducts: (organizationId) => {
     return axiosInstance.get(`${baseUrl}/products`);

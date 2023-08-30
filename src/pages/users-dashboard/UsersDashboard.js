@@ -193,6 +193,7 @@ const UsersDashboard = () => {
     const response = await OrganizationUserApi.getStockList(organizationId);
     const stockData = formatStockData(response.data);
     dispatch(setStockListAction({ stocksList: stockData }));
+    // dispatch(setProductsListAction({ productsList: stockData }));
   };
 
   const getPurchaseList = async () => {

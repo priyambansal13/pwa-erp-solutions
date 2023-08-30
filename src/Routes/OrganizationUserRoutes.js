@@ -7,7 +7,7 @@ import Register from "../pages/authentication/register/Register";
 import Sales from "../pages/Sales/Sales";
 import Purchase from "../pages/Purchase/Purchase";
 import Suppliers from "../pages/Suppliers/Suppliers";
-import Stock from "../pages/Stock/Stock";
+// import Stock from "../pages/Stock/Stock";
 import Customers from "../pages/Customers/Customers";
 import UsersDashboard from "../pages/users-dashboard/UsersDashboard";
 import UserAccount from "../pages/Account/UserAccount";
@@ -47,10 +47,10 @@ const OrganizationUserRoutes = (isLoggedIn) => [
         path: "",
         element: <UsersDashboard />,
       },
-      {
-        path: "/product-stock",
-        element: <Stock />,
-      },
+      // {
+      //   path: "/product-stock",
+      //   element: <Stock />,
+      // },
       {
         path: "/dashboard",
         element: <UsersDashboard />,
